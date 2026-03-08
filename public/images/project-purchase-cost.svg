@@ -1,0 +1,22 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" fill="#090B11"/>
+  <circle cx="1018" cy="120" r="214" fill="#38BDF8" fill-opacity="0.12"/>
+  <rect x="48" y="48" width="1104" height="624" rx="36" fill="url(#paint0_linear)" stroke="#1E293B"/>
+  <rect x="108" y="148" width="420" height="404" rx="28" fill="#0F172A" stroke="#334155"/>
+  <rect x="152" y="194" width="168" height="18" rx="9" fill="#7DD3FC"/>
+  <rect x="152" y="242" width="316" height="14" rx="7" fill="#475569"/>
+  <rect x="152" y="296" width="332" height="96" rx="18" fill="#111827" stroke="#334155"/>
+  <rect x="152" y="422" width="332" height="88" rx="18" fill="#111827" stroke="#334155"/>
+  <rect x="670" y="174" width="378" height="90" rx="22" fill="#082F49" stroke="#38BDF8"/>
+  <rect x="670" y="304" width="378" height="90" rx="22" fill="#0F172A" stroke="#334155"/>
+  <rect x="670" y="434" width="378" height="90" rx="22" fill="#0F172A" stroke="#334155"/>
+  <text x="96" y="102" fill="#7DD3FC" font-family="Segoe UI, Arial, sans-serif" font-size="24" letter-spacing="4">PROJECT / COST ANALYSIS</text>
+  <text x="96" y="614" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700">購入＆支給明細分析ツール</text>
+  <text x="96" y="662" fill="#94A3B8" font-family="Segoe UI, Arial, sans-serif" font-size="24">PDF明細と構成マスタを照合し、部品コストを按分分析する</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="74" y1="70" x2="1118" y2="656" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827" stop-opacity="0.98"/>
+      <stop offset="1" stop-color="#082F49" stop-opacity="0.38"/>
+    </linearGradient>
+  </defs>
+</svg>
