@@ -17,20 +17,12 @@ export const siteConfig = {
       href: "https://coconala.com/users/5946587"
     }
   ],
+  primaryProfile: {
+    label: "Coconala",
+    href: "https://coconala.com/users/5946587"
+  },
   defaultOgImage: "/og/default.svg",
   domainFocus: ["製造業DX", "AI活用", "業務改善", "現場運用設計"],
-  contact: {
-    pagePath: "/contact/",
-    formAction: "https://formspree.io/f/xqeyaqrq",
-    provider: "Formspree",
-    submitLabel: "相談内容を送信",
-    providerDescription:
-      "メールアドレスは公開せず、フォーム経由で相談を受け付ける構成です。",
-    setupNote:
-      "Formspree 側で通知先を Gmail に設定し、スパム対策や自動返信ルールを必要に応じて調整してください。"
-  },
-  contactMessage:
-    "副業・制作相談、社内向けツール設計、AI活用の運用整理などは、メール非公開の問い合わせフォームから受け付ける構成にしています。",
   notFound: {
     title: "探しているページは見つかりませんでした。",
     description:

@@ -2,7 +2,7 @@
 
 Astro 5、Tailwind CSS、Astro Content Collections を使った、GitHub Pages 向けの静的ポートフォリオ兼開発者ブログです。
 
-副業向けの公開面を想定し、`実名ではなく開発者ネーム`、`メール直出しではなくフォーム導線` の構成にしています。
+副業向けの公開面を想定し、`実名ではなく開発者ネーム`、`サイト内で直接連絡を受けない` 構成にしています。プロフィール導線は `GitHub` と `Coconala` に寄せています。
 
 ## ローカル開発手順
 
@@ -129,7 +129,7 @@ draft: false
 
 GitHub Actions 側では `Node 22` を使って `astro build` を実行し、`dist/` を GitHub Pages に配備します。
 
-## 開発者ネームと問い合わせフォームの設定
+## 開発者ネームとプロフィールリンクの設定
 
 公開前に `src/data/site.ts` の以下を確認してください。
 
@@ -137,18 +137,10 @@ GitHub Actions 側では `Node 22` を使って `astro build` を実行し、`di
   - 開発者ネーム
 - `socialLinks`
   - `GitHub` と `Coconala` の URL
-- `contact.formAction`
-  - Formspree のフォーム URL
+- `primaryProfile`
+  - ヘッダーやフッターで優先表示する外部プロフィール
 
-このプロジェクトは、メールアドレスを公開せずに問い合わせを受ける前提です。
-
-おすすめ設定:
-
-1. Formspree でフォームを作る
-2. 通知先を Gmail に設定する
-3. `src/data/site.ts` の `contact.formAction` が Formspree の実URLになっていることを確認する
-
-フォームページは `src/pages/contact/index.astro` です。
+このプロジェクトは、サイト内に問い合わせフォームを置かず、外部プロフィールへ誘導する前提です。
 
 ## `site` と `base` の考え方
 

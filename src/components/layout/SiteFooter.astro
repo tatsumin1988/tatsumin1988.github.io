@@ -4,6 +4,7 @@ import { mainNavigation, siteConfig } from "../../data/site";
 import { withBase } from "../../utils/links";
 
 const year = new Date().getFullYear();
+const primaryProfile = siteConfig.primaryProfile;
 ---
 
 <footer class="border-t border-white/6 bg-[rgba(6,9,15,0.84)]">
@@ -11,23 +12,25 @@ const year = new Date().getFullYear();
     <div class="surface-feature grid gap-6 p-6 md:grid-cols-[1fr_auto] md:items-end md:p-8">
       <div class="space-y-4">
         <p class="eyebrow eyebrow-muted">最後に見る導線</p>
-        <h2 class="section-title">相談したい内容があるなら、フォームから受け付けます。</h2>
+        <h2 class="section-title">実績を見るか、外部プロフィールを確認する構成に寄せています。</h2>
         <p class="lead-copy max-w-3xl">
-          課題の整理段階でも構いません。副業・制作相談、社内向けツール設計、AI活用の運用整理などは問い合わせフォームから送れます。
+          ココナラ掲載用のポートフォリオとして、サイト内で直接連絡できる導線は置かず、実績確認と外部プロフィール参照に絞っています。
         </p>
       </div>
       <div class="flex flex-col gap-3 sm:flex-row">
         <a
-          href={withBase(siteConfig.contact.pagePath)}
+          href={withBase("/projects/")}
           class="inline-flex items-center justify-center rounded-full bg-sky-300 px-6 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-200"
         >
-          相談する
+          代表実績を見る
         </a>
         <a
-          href={withBase("/projects/")}
+          href={primaryProfile.href}
+          target="_blank"
+          rel="noreferrer"
           class="inline-flex items-center justify-center rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:border-sky-300/20 hover:bg-white/6"
         >
-          代表実績を見る
+          {primaryProfile.label}を見る
         </a>
       </div>
     </div>
@@ -67,16 +70,6 @@ const year = new Date().getFullYear();
             </a>
           </li>
         ))}
-        <li>
-          <a href={withBase(siteConfig.contact.pagePath)} class="transition duration-200 hover:text-white">
-            相談フォーム
-          </a>
-        </li>
-        <li>
-          <a href={withBase("/privacy-policy/")} class="transition duration-200 hover:text-white">
-            プライバシーポリシー
-          </a>
-        </li>
       </ul>
     </div>
   </Container>

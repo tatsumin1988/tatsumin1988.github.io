@@ -80,6 +80,7 @@ const leadProjectCover = leadProject ? withBase(leadProject.data.cover_image ?? 
 const leadProjectCoverIsSvg = leadProjectCover?.endsWith(".svg");
 const featuredPostCover = featuredPost ? withBase(featuredPost.data.cover_image ?? "/og/default.svg") : null;
 const featuredPostCoverIsSvg = featuredPostCover?.endsWith(".svg");
+const primaryProfile = siteConfig.primaryProfile;
 ---
 
 <BaseLayout>
@@ -362,10 +363,10 @@ const featuredPostCoverIsSvg = featuredPostCover?.endsWith(".svg");
     <Container>
       <div class="surface-feature grid gap-8 p-6 md:grid-cols-[1fr_auto] md:items-end md:p-8">
         <div class="space-y-4">
-          <p class="eyebrow eyebrow-muted">相談できること</p>
-          <h2 class="section-title">現場理解と実装を切り分けず、一気通貫で改善を進める。</h2>
+          <p class="eyebrow eyebrow-muted">外部プロフィール</p>
+          <h2 class="section-title">このサイトでは実績を見せ、依頼導線は外部プロフィールへ寄せています。</h2>
           <p class="lead-copy max-w-3xl">
-            課題の整理、入力導線の再設計、AI活用の実務接続、社内向けツールの設計と実装までを、運用に耐える粒度で設計します。
+            ココナラ掲載用のポートフォリオとして、サイト内に直接メッセージ導線は置かず、実績確認とプロフィール参照に絞っています。
           </p>
         </div>
         <div class="flex flex-col gap-3 sm:flex-row">
@@ -376,10 +377,12 @@ const featuredPostCoverIsSvg = featuredPostCover?.endsWith(".svg");
             概要を見る
           </a>
           <a
-            href={withBase(siteConfig.contact.pagePath)}
+            href={primaryProfile.href}
+            target="_blank"
+            rel="noreferrer"
             class="inline-flex items-center justify-center rounded-full bg-sky-300 px-6 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-200"
           >
-            相談する
+            {primaryProfile.label}を見る
           </a>
         </div>
       </div>
