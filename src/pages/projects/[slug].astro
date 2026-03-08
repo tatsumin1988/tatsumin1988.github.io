@@ -59,6 +59,18 @@ const isConceptDemo = project.data.project_type === "concept_demo";
           )}
         </div>
         <TagList tags={project.data.tech_stack} />
+        {project.data.demo_url && (
+          <div class="flex flex-wrap gap-3 pt-1">
+            <a
+              href={project.data.demo_url}
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center justify-center rounded-full bg-sky-300 px-5 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-200"
+            >
+              Live Demoを見る
+            </a>
+          </div>
+        )}
       </div>
 
       <div class="grid gap-4 sm:grid-cols-2">

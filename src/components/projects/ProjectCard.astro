@@ -13,9 +13,9 @@ const coverImage = withBase(project.data.cover_image ?? "/og/default.svg");
 const coverIsSvg = coverImage.endsWith(".svg");
 const isConceptDemo = project.data.project_type === "concept_demo";
 const shortProblem =
-  project.data.problem.length > 68 ? `${project.data.problem.slice(0, 68).trim()}…` : project.data.problem;
+  project.data.problem.length > 68 ? `${project.data.problem.slice(0, 68).trim()}...` : project.data.problem;
 const shortSolution =
-  project.data.solution.length > 68 ? `${project.data.solution.slice(0, 68).trim()}…` : project.data.solution;
+  project.data.solution.length > 68 ? `${project.data.solution.slice(0, 68).trim()}...` : project.data.solution;
 const proofPoints = project.data.proof_points.slice(0, 2);
 ---
 
@@ -26,10 +26,7 @@ const proofPoints = project.data.proof_points.slice(0, 2);
         src={coverImage}
         alt={project.data.title}
         loading="lazy"
-        class:list={[
-          "cover-media",
-          coverIsSvg ? "cover-media--poster" : "cover-media--screen"
-        ]}
+        class:list={["cover-media", coverIsSvg ? "cover-media--poster" : "cover-media--screen"]}
       />
     </div>
     <div class="flex h-full flex-col gap-5 p-6 md:p-7">
@@ -37,6 +34,11 @@ const proofPoints = project.data.proof_points.slice(0, 2);
         {isConceptDemo && (
           <span class="inline-flex items-center rounded-full border border-sky-300/20 bg-sky-400/10 px-3 py-1 text-xs font-medium text-sky-100">
             Concept Demo
+          </span>
+        )}
+        {isConceptDemo && project.data.demo_url && (
+          <span class="inline-flex items-center rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-100">
+            Live Demoあり
           </span>
         )}
         <StatusBadge status={project.data.status} />
