@@ -21,41 +21,48 @@ const contactTopics = [
   <section class="section-space pb-12 pt-16 md:pb-16">
     <Container class="grid gap-8 lg:grid-cols-[1fr_0.42fr] lg:items-end">
       <div class="space-y-5">
-        <p class="eyebrow">Contact</p>
+        <p class="eyebrow">お問い合わせ</p>
         <h1 class="page-title max-w-4xl">メールアドレスを公開せず、相談を受け付ける。</h1>
         <p class="lead-copy max-w-3xl">
           副業向けの公開面として、連絡先はフォームに集約しています。制作相談、業務改善テーマの壁打ち、AI活用の整理などはここから送れます。
         </p>
         <div class="flex flex-wrap gap-2">
           {contactTopics.map((item) => (
-            <span class="pill">{item}</span>
+            <span class="signal-chip">{item}</span>
           ))}
         </div>
       </div>
 
-      <aside class="surface-panel p-6 md:p-7">
+      <aside class="surface-feature p-6 md:p-8">
         <div class="space-y-5">
           <div>
-            <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Profiles</p>
-            <div class="mt-3 flex flex-wrap gap-2">
+            <p class="info-label">外部プロフィール</p>
+            <div class="mt-4 flex flex-col gap-3">
               {siteConfig.socialLinks.map((item) => (
                 <a
                   href={item.href}
                   target="_blank"
                   rel="noreferrer"
-                  class="pill transition duration-200 hover:border-sky-300/25 hover:bg-sky-400/10"
+                  class="inline-flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3 text-sm text-slate-100 transition duration-200 hover:border-sky-300/25 hover:bg-white/6"
                 >
-                  {item.label}
+                  <span>{item.label}</span>
+                  <span class="text-slate-400">外部ページ</span>
                 </a>
               ))}
             </div>
           </div>
           <div>
-            <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Form Policy</p>
+            <p class="info-label">フォーム運用</p>
             <p class="mt-3 text-sm leading-7 text-slate-300">{siteConfig.contact.providerDescription}</p>
             <p class="mt-3 text-sm leading-7 text-slate-400">
               送信基盤は {siteConfig.contact.provider} を想定しています。通知先を Gmail に設定して、メール非公開のまま受信できる構成です。
             </p>
+            <div class="surface-quiet mt-4 p-4">
+              <p class="info-label">返信の目安</p>
+              <p class="mt-2 text-sm leading-7 text-slate-300">
+                内容確認後、対応可能な範囲や進め方を前提に返信します。未整理の相談でも問題ありません。
+              </p>
+            </div>
           </div>
         </div>
       </aside>
@@ -137,22 +144,30 @@ const contactTopics = [
             ></textarea>
           </label>
 
-          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p class="text-sm leading-7 text-slate-400">
-              送信後は {siteConfig.contact.provider} 側で受信され、Gmail 通知へつなぐ想定です。公開面にはメールアドレスを表示しません。
-            </p>
-            <button
-              type="submit"
-              disabled={!formIsConfigured}
-              class:list={[
-                "inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition duration-200",
-                formIsConfigured
-                  ? "bg-sky-300 text-slate-950 hover:bg-sky-200"
-                  : "cursor-not-allowed bg-slate-700 text-slate-300"
-              ]}
-            >
-              {siteConfig.contact.submitLabel}
-            </button>
+          <div class="surface-feature p-5">
+            <div class="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div class="space-y-2">
+                <p class="info-label">送信前の確認</p>
+                <p class="text-sm leading-7 text-slate-300">
+                  相談内容の粒度は粗くて構いません。現状、困っていること、作りたいもののどれか一つでもあれば十分です。
+                </p>
+                <p class="text-sm leading-7 text-slate-400">
+                  送信後は {siteConfig.contact.provider} 側で受信され、Gmail 通知へつなぐ想定です。公開面にはメールアドレスを表示しません。
+                </p>
+              </div>
+              <button
+                type="submit"
+                disabled={!formIsConfigured}
+                class:list={[
+                  "inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition duration-200",
+                  formIsConfigured
+                    ? "bg-sky-300 text-slate-950 hover:bg-sky-200"
+                    : "cursor-not-allowed bg-slate-700 text-slate-300"
+                ]}
+              >
+                {siteConfig.contact.submitLabel}
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -163,7 +178,7 @@ const contactTopics = [
     <Container>
       <div class="surface-panel grid gap-6 p-6 md:grid-cols-[1fr_auto] md:items-end md:p-8">
         <div class="space-y-4">
-          <p class="eyebrow">Alternative Paths</p>
+          <p class="eyebrow eyebrow-muted">別の導線</p>
           <h2 class="section-title">実績確認は GitHub、依頼導線はココナラに分ける。</h2>
           <p class="lead-copy max-w-3xl">
             技術の見え方は GitHub、相談しやすさはココナラ、一次連絡はフォームに寄せると、副業向けの公開面として整いやすくなります。
@@ -184,7 +199,7 @@ const contactTopics = [
             href={withBase("/projects/")}
             class="inline-flex items-center justify-center rounded-full bg-sky-300 px-6 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-200"
           >
-            Projectsを見る
+            実績を見る
           </a>
         </div>
       </div>

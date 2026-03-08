@@ -16,6 +16,8 @@ const statusSummary = statuses.map((status) => ({
   status,
   count: projects.filter((project) => project.data.status === status).length
 }));
+const leadProject = featuredProjects[0] ?? projects[0];
+const sideProjects = (catalogProjects.length > 0 ? catalogProjects : projects).filter((project) => project.id !== leadProject?.id);
 ---
 
 <BaseLayout
@@ -23,9 +25,9 @@ const statusSummary = statuses.map((status) => ({
   description="製造業DX、AI活用、業務改善の実績と設計事例をまとめたプロジェクト一覧。"
 >
   <section class="section-space pb-12 pt-16 md:pb-16">
-    <Container class="grid gap-8 lg:grid-cols-[1fr_0.42fr] lg:items-end">
+    <Container class="grid gap-8 lg:grid-cols-[0.94fr_1.06fr] lg:items-end">
       <div class="space-y-4">
-        <p class="eyebrow">Projects</p>
+        <p class="eyebrow">実績</p>
         <h1 class="page-title max-w-5xl">現場課題の理解から、運用まで見据えた実装例。</h1>
         <p class="lead-copy max-w-3xl">
           単機能のツール紹介ではなく、現場の入力負荷、確認フロー、責任分界、AI利用時の例外処理まで含めて設計したプロジェクトを掲載しています。
@@ -34,35 +36,35 @@ const statusSummary = statuses.map((status) => ({
 
       <aside class="surface-panel p-6 md:p-7">
         <div class="space-y-5">
-          <div>
-            <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Overview</p>
-            <p class="mt-3 text-4xl font-semibold tracking-[-0.04em] text-white">{projects.length}</p>
-            <p class="mt-2 text-sm text-slate-400">掲載プロジェクト数</p>
-          </div>
-          <div>
-            <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Status</p>
-            <div class="mt-3 flex flex-wrap gap-3">
-              {statusSummary.map((item) => (
-                <div class="flex items-center gap-2">
+            <div>
+              <p class="info-label">掲載状況</p>
+              <p class="mt-3 text-4xl font-semibold tracking-[-0.04em] text-white">{projects.length}</p>
+              <p class="mt-2 text-sm text-slate-400">掲載プロジェクト数</p>
+            </div>
+            <div>
+              <p class="info-label">状態</p>
+              <div class="mt-3 flex flex-wrap gap-3">
+                {statusSummary.map((item) => (
+                  <div class="flex items-center gap-2">
                   <StatusBadge status={item.status} />
                   <span class="text-xs text-slate-400">{item.count}</span>
                 </div>
               ))}
+              </div>
             </div>
-          </div>
-          <div>
-            <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Tech Stack</p>
-            <div class="mt-3 flex flex-wrap gap-2">
-              {stacks.map((item) => (
-                <span class="pill">{item.tech} · {item.count}</span>
+            <div>
+              <p class="info-label">主な技術</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                {stacks.map((item) => (
+                  <span class="pill">{item.tech} · {item.count}</span>
               ))}
+              </div>
             </div>
-          </div>
-          <div>
-            <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Focus</p>
-            <div class="mt-3 flex flex-wrap gap-2">
-              {siteConfig.domainFocus.map((item) => (
-                <span class="pill">{item}</span>
+            <div>
+              <p class="info-label">扱う領域</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                {siteConfig.domainFocus.map((item) => (
+                  <span class="pill">{item}</span>
               ))}
             </div>
           </div>
@@ -71,19 +73,45 @@ const statusSummary = statuses.map((status) => ({
     </Container>
   </section>
 
-  {featuredProjects.length > 0 && (
+  {leadProject && (
     <section class="section-divider section-space pt-10">
       <Container class="space-y-8">
         <div class="max-w-3xl space-y-4">
-          <p class="eyebrow">Featured</p>
-          <h2 class="section-title">課題構造と運用設計の両面が見える代表プロジェクト。</h2>
+          <p class="eyebrow eyebrow-muted">代表ケース</p>
+          <h2 class="section-title">課題構造と運用設計の両面が見える実績を先に見せる。</h2>
           <p class="lead-copy max-w-3xl">
-            単に機能を実装した例ではなく、入力責任、確認フロー、AI の扱い方まで含めて構造を設計した案件を前面に出しています。
+            一覧の前に、何をどう改善する人なのかが一目で伝わるケースを置いています。詳細ページでは背景、打ち手、効果まで追えます。
           </p>
         </div>
-        <div class="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
-          {featuredProjects.map((project) => <ProjectCard project={project} />)}
-        </div>
+        <a href={withBase(`/projects/${leadProject.id}/`)} class="surface-feature grid overflow-hidden lg:grid-cols-[0.5fr_0.5fr]">
+          <div class="relative aspect-[4/3] overflow-hidden border-b border-white/8 lg:aspect-auto lg:border-b-0 lg:border-r">
+            <img
+              src={withBase(leadProject.data.cover_image ?? "/og/default.svg")}
+              alt={leadProject.data.title}
+              class="h-full w-full object-cover"
+            />
+          </div>
+          <div class="relative z-10 flex flex-col gap-5 p-6 md:p-8">
+            <div class="flex flex-wrap gap-2">
+              <StatusBadge status={leadProject.data.status} />
+              {leadProject.data.featured && <span class="signal-chip">代表掲載</span>}
+            </div>
+            <div class="space-y-4">
+              <h3 class="text-3xl font-semibold tracking-[-0.04em] text-white">{leadProject.data.title}</h3>
+              <p class="text-sm leading-7 text-slate-300">{leadProject.data.summary}</p>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <div class="surface-quiet p-4">
+                <p class="info-label">対象課題</p>
+                <p class="mt-3 text-sm leading-7 text-slate-300">{leadProject.data.problem}</p>
+              </div>
+              <div class="surface-quiet p-4">
+                <p class="info-label">主な打ち手</p>
+                <p class="mt-3 text-sm leading-7 text-slate-300">{leadProject.data.solution}</p>
+              </div>
+            </div>
+          </div>
+        </a>
       </Container>
     </section>
   )}
@@ -92,7 +120,7 @@ const statusSummary = statuses.map((status) => ({
     <Container class="space-y-8">
       <div class="grid gap-6 lg:grid-cols-[0.72fr_0.28fr] lg:items-start">
         <div class="space-y-4">
-          <p class="eyebrow">Project Catalog</p>
+          <p class="eyebrow eyebrow-muted">実績一覧</p>
           <h2 class="section-title">掲載中の全プロジェクト</h2>
           <p class="lead-copy max-w-3xl">
             公開中、試作、改善継続中などステータスの違いを残したまま掲載しています。実務では完成度よりも、どの段階で何を検証しているかが重要だからです。
@@ -102,13 +130,13 @@ const statusSummary = statuses.map((status) => ({
         <aside class="surface-panel p-6 md:p-7">
           <div class="space-y-5">
             <div>
-              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Reading Guide</p>
+              <p class="info-label">見どころ</p>
               <p class="mt-3 text-sm leading-7 text-slate-300">
                 各詳細ページでは、概要だけでなく、課題背景、解決アプローチ、工夫点、効果、関連リンクまで構造化して掲載しています。
               </p>
             </div>
             <div>
-              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Contact</p>
+              <p class="info-label">相談導線</p>
               <p class="mt-3 text-sm leading-7 text-slate-300">{siteConfig.contactMessage}</p>
               <a
                 href={withBase(siteConfig.contact.pagePath)}
@@ -122,7 +150,7 @@ const statusSummary = statuses.map((status) => ({
       </div>
 
       <div class="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
-        {(catalogProjects.length > 0 ? catalogProjects : projects).map((project) => (
+        {sideProjects.map((project) => (
           <ProjectCard project={project} />
         ))}
       </div>

@@ -10,11 +10,15 @@ interface Props {
 
 const { project } = Astro.props as Props;
 const coverImage = withBase(project.data.cover_image ?? "/og/default.svg");
+const shortProblem =
+  project.data.problem.length > 68 ? `${project.data.problem.slice(0, 68).trim()}…` : project.data.problem;
+const shortSolution =
+  project.data.solution.length > 68 ? `${project.data.solution.slice(0, 68).trim()}…` : project.data.solution;
 ---
 
 <article class="surface-card overflow-hidden">
   <a href={withBase(`/projects/${project.id}/`)} class="flex h-full flex-col">
-    <div class="relative min-h-56 overflow-hidden border-b border-white/8">
+    <div class="relative aspect-[4/3] overflow-hidden border-b border-white/8">
       <img src={coverImage} alt={project.data.title} loading="lazy" class="h-full w-full object-cover" />
     </div>
     <div class="flex h-full flex-col gap-5 p-6 md:p-7">
@@ -22,7 +26,7 @@ const coverImage = withBase(project.data.cover_image ?? "/og/default.svg");
         <StatusBadge status={project.data.status} />
         {project.data.featured && (
           <span class="inline-flex items-center rounded-full border border-white/10 px-3 py-1 text-xs font-medium text-slate-200">
-            Featured
+            代表掲載
           </span>
         )}
       </div>
@@ -31,11 +35,17 @@ const coverImage = withBase(project.data.cover_image ?? "/og/default.svg");
         <p class="muted-copy text-sm">{project.data.summary}</p>
       </div>
       <div class="mt-auto space-y-3">
-        <div>
-          <p class="text-xs uppercase tracking-[0.16em] text-slate-500">Problem</p>
-          <p class="mt-2 text-sm leading-7 text-slate-300">{project.data.problem}</p>
+        <div class="grid gap-3 text-sm text-slate-300">
+          <div class="surface-quiet px-4 py-3">
+            <p class="info-label">対象課題</p>
+            <p class="mt-2 leading-7">{shortProblem}</p>
+          </div>
+          <div class="surface-quiet px-4 py-3">
+            <p class="info-label">主な打ち手</p>
+            <p class="mt-2 leading-7">{shortSolution}</p>
+          </div>
         </div>
-        <TagList tags={project.data.tech_stack} compact />
+        <TagList tags={project.data.tech_stack.slice(0, 3)} compact />
       </div>
     </div>
   </a>

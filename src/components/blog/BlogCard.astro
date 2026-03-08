@@ -14,7 +14,7 @@ const coverImage = withBase(post.data.cover_image ?? "/og/default.svg");
 
 <article class="surface-card overflow-hidden">
   <a href={withBase(`/blog/${post.id}/`)} class="group grid h-full md:grid-cols-[0.42fr_0.58fr] md:items-stretch">
-    <div class="relative min-h-56 overflow-hidden border-b border-white/8 md:min-h-full md:border-b-0 md:border-r">
+    <div class="relative aspect-[4/3] overflow-hidden border-b border-white/8 md:aspect-auto md:min-h-full md:border-b-0 md:border-r">
       <img
         src={coverImage}
         alt={post.data.title}
@@ -23,11 +23,11 @@ const coverImage = withBase(post.data.cover_image ?? "/og/default.svg");
       />
     </div>
     <div class="flex h-full flex-col gap-5 p-6 md:p-7">
-      <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.14em] text-slate-500">
+      <div class="flex flex-wrap items-center gap-3 text-xs tracking-[0.14em] text-slate-400">
         <time datetime={post.data.date.toISOString()}>{formatCompactDate(post.data.date)}</time>
         {post.data.updated && (
-          <span class="rounded-full border border-white/8 px-2.5 py-1 text-[0.68rem] text-slate-400">
-            Updated {formatCompactDate(post.data.updated)}
+          <span class="rounded-full border border-white/8 px-2.5 py-1 text-[0.68rem] text-slate-300">
+            更新 {formatCompactDate(post.data.updated)}
           </span>
         )}
       </div>

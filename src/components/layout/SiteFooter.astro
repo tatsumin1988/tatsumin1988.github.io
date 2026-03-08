@@ -7,9 +7,35 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="border-t border-white/6 bg-[rgba(6,9,15,0.84)]">
+  <Container class="pt-10">
+    <div class="surface-feature grid gap-6 p-6 md:grid-cols-[1fr_auto] md:items-end md:p-8">
+      <div class="space-y-4">
+        <p class="eyebrow eyebrow-muted">最後に見る導線</p>
+        <h2 class="section-title">相談したい内容があるなら、フォームから受け付けます。</h2>
+        <p class="lead-copy max-w-3xl">
+          課題の整理段階でも構いません。副業・制作相談、社内向けツール設計、AI活用の運用整理などは問い合わせフォームから送れます。
+        </p>
+      </div>
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <a
+          href={withBase(siteConfig.contact.pagePath)}
+          class="inline-flex items-center justify-center rounded-full bg-sky-300 px-6 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-200"
+        >
+          相談する
+        </a>
+        <a
+          href={withBase("/projects/")}
+          class="inline-flex items-center justify-center rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:border-sky-300/20 hover:bg-white/6"
+        >
+          代表実績を見る
+        </a>
+      </div>
+    </div>
+  </Container>
+
   <Container class="grid gap-10 py-12 md:grid-cols-[1.5fr_1fr_1fr] md:gap-12">
     <div class="space-y-4">
-      <p class="eyebrow">Portfolio / Engineering Notes</p>
+      <p class="eyebrow eyebrow-muted">Portfolio / Engineering Notes</p>
       <h2 class="max-w-md text-2xl font-semibold tracking-[-0.03em] text-white">
         現場で使える改善を、設計と実装の両方から積み上げる。
       </h2>
@@ -44,6 +70,11 @@ const year = new Date().getFullYear();
         <li>
           <a href={withBase(siteConfig.contact.pagePath)} class="transition duration-200 hover:text-white">
             相談フォーム
+          </a>
+        </li>
+        <li>
+          <a href={withBase("/privacy-policy/")} class="transition duration-200 hover:text-white">
+            プライバシーポリシー
           </a>
         </li>
       </ul>
