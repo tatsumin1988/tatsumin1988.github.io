@@ -13,12 +13,12 @@ export const siteConfig = {
       href: "https://github.com/tatsumin1988"
     },
     {
-      label: "Coconala",
+      label: "ココナラ",
       href: "https://coconala.com/users/5946587"
     }
   ],
   primaryProfile: {
-    label: "Coconala",
+    label: "ココナラ",
     href: "https://coconala.com/users/5946587"
   },
   defaultOgImage: "/og/default.svg",
@@ -56,12 +56,12 @@ export const aboutSections = [
   {
     title: "向き合っている課題",
     description:
-      "現場で本当に困っているのは、情報が無いことではなく、必要なタイミングで使える形に整理されていないことです。入力負荷が高い、運用が属人化する、改善効果が見えない。その構造を設計からほどくことを重視しています。"
+      "現場で本当に困っているのは、情報が足りないことではなく、必要な形に整理されていないことです。入力負荷、属人化、改善効果の見えにくさを、運用設計からほどくことを重視しています。"
   },
   {
     title: "AI活用のスタンス",
     description:
-      "AIは魔法ではなく、判断補助と作業圧縮の道具です。曖昧な要求を構造化し、現場運用に落ちるUIとワークフローに接続して初めて価値になります。精度だけでなく、責任範囲と再現性を設計します。"
+      "AIは魔法ではなく、判断補助と作業圧縮の道具です。曖昧な要求を構造化し、現場運用に落ちるUIとワークフローへ接続して初めて価値になります。"
   },
   {
     title: "得意領域",

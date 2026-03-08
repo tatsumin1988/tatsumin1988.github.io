@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/ui/Container.astro";
 import ProjectCard from "../components/projects/ProjectCard.astro";
 import TagList from "../components/ui/TagList.astro";
-import { homeContent, siteConfig } from "../data/site";
+import { homeContent } from "../data/site";
 import { collectBlogTags, getPublishedBlogPosts, getPublishedProjects } from "../utils/content";
 import { formatCompactDate } from "../utils/dates";
 import { withBase } from "../utils/links";
@@ -79,11 +79,13 @@ const leadProject = selectedProjects[0] ?? caseStudies[0];
 const supportingProjects = selectedProjects.filter((project) => project.id !== leadProject?.id).slice(0, 2);
 const featuredPost = latestPosts[0] ?? posts[0];
 const secondaryPosts = latestPosts.filter((post) => post.id !== featuredPost?.id).slice(0, 2);
-const leadProjectCover = leadProject ? withBase(leadProject.data.cover_image ?? "/og/default.svg") : null;
+const leadProjectCover = leadProject
+  ? withBase(leadProject.data.showcase_image ?? leadProject.data.cover_image ?? "/og/default.svg")
+  : null;
 const leadProjectCoverIsSvg = leadProjectCover?.endsWith(".svg");
+const leadProjectMetrics = leadProject?.data.evidence_metrics.slice(0, 3) ?? [];
 const featuredPostCover = featuredPost ? withBase(featuredPost.data.cover_image ?? "/og/default.svg") : null;
 const featuredPostCoverIsSvg = featuredPostCover?.endsWith(".svg");
-const primaryProfile = siteConfig.primaryProfile;
 ---
 
 <BaseLayout>
@@ -162,15 +164,29 @@ const primaryProfile = siteConfig.primaryProfile;
               </a>
 
               <div class="surface-quiet p-5">
-                <p class="info-label">設計時に見るポイント</p>
-                <ul class="mt-4 space-y-3 text-sm leading-7 text-slate-300">
-                  {operatingPrinciples.map((item) => (
-                    <li class="flex gap-3">
-                      <span class="mt-2 h-1.5 w-1.5 rounded-full bg-sky-300"></span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <p class="info-label">定量で見えること</p>
+                {leadProjectMetrics.length > 0 ? (
+                  <div class="mt-4 grid gap-3">
+                    {leadProjectMetrics.map((item) => (
+                      <div class="metric-tile">
+                        <div class="flex items-end justify-between gap-4">
+                          <p class="text-sm text-slate-400">{item.label}</p>
+                          <p class="text-2xl font-semibold tracking-[-0.04em] text-white">{item.value}</p>
+                        </div>
+                        {item.note && <p class="mt-2 text-sm leading-6 text-slate-300">{item.note}</p>}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <ul class="mt-4 space-y-3 text-sm leading-7 text-slate-300">
+                    {operatingPrinciples.map((item) => (
+                      <li class="flex gap-3">
+                        <span class="mt-2 h-1.5 w-1.5 rounded-full bg-sky-300"></span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           )}
@@ -384,36 +400,6 @@ const primaryProfile = siteConfig.primaryProfile;
             </div>
           </div>
         </aside>
-      </div>
-    </Container>
-  </section>
-
-  <section class="section-divider section-space">
-    <Container>
-      <div class="surface-feature grid gap-8 p-6 md:grid-cols-[1fr_auto] md:items-end md:p-8">
-        <div class="space-y-4">
-          <p class="eyebrow eyebrow-muted">外部プロフィール</p>
-          <h2 class="section-title">このサイトでは実績を見せ、依頼導線は外部プロフィールへ寄せています。</h2>
-          <p class="lead-copy max-w-3xl">
-            ココナラ掲載用のポートフォリオとして、サイト内に直接メッセージ導線は置かず、実績確認とプロフィール参照に絞っています。
-          </p>
-        </div>
-        <div class="flex flex-col gap-3 sm:flex-row">
-          <a
-            href={withBase("/about/")}
-            class="inline-flex items-center justify-center rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:border-sky-300/20 hover:bg-white/6"
-          >
-            概要を見る
-          </a>
-          <a
-            href={primaryProfile.href}
-            target="_blank"
-            rel="noreferrer"
-            class="inline-flex items-center justify-center rounded-full bg-sky-300 px-6 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-200"
-          >
-            {primaryProfile.label}を見る
-          </a>
-        </div>
       </div>
     </Container>
   </section>

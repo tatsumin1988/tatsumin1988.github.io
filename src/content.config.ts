@@ -38,6 +38,17 @@ const projects = defineCollection({
     audience: z.string().optional(),
     disclaimer: z.string().optional(),
     cover_image: z.string().optional(),
+    showcase_image: z.string().optional(),
+    showcase_caption: z.string().optional(),
+    evidence_metrics: z
+      .array(
+        z.object({
+          label: z.string(),
+          value: z.string(),
+          note: z.string().optional()
+        })
+      )
+      .default([]),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false)
   })

@@ -12,6 +12,18 @@ tech_stack:
 status: "社内利用"
 links: []
 cover_image: "/images/project-purchase-cost.svg"
+showcase_image: "/images/project-purchase-cost-report.svg"
+showcase_caption: "照合結果レポートの出力イメージ"
+evidence_metrics:
+  - label: "入力"
+    value: "PDF 1本"
+    note: "既存帳票をそのまま入口にできる"
+  - label: "出力"
+    value: "3シート"
+    note: "照合結果、部品構成別、紐付なしを分けて確認"
+  - label: "実行"
+    value: "1操作"
+    note: "バッチへドラッグ&ドロップで処理開始"
 featured: true
 draft: false
 ---
@@ -43,6 +55,7 @@ draft: false
 - PDF転記から照合作業までの一連の流れを短縮しやすくなった
 - 共通部品の扱いをルール化し、属人的な判断を減らしやすくなった
 - 紐付できなかった部品を一覧で洗い出せるため、マスタ改善にもつながる状態になった
+- 照合結果を3系統のシートで出すことで、確認観点を分けて追えるようになった
 
 ## 今後の改善
 
