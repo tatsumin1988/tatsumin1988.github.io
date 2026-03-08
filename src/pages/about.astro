@@ -1,0 +1,220 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/ui/Container.astro";
+import { aboutSections } from "../data/site";
+import { getPublishedBlogPosts, getPublishedProjects } from "../utils/content";
+import { withBase } from "../utils/links";
+
+const strengths = [
+  "業務フローの可視化",
+  "要件整理と画面設計",
+  "社内ツールの実装",
+  "AIワークフロー設計",
+  "入力負荷の削減",
+  "改善運用の定着支援"
+];
+
+const process = [
+  {
+    step: "01",
+    title: "現場の困りごとを構造化",
+    description:
+      "要望をそのまま並べず、頻度、責任者、例外、情報の流れに分解して課題の芯を見つけます。"
+  },
+  {
+    step: "02",
+    title: "運用とUIを同時に設計",
+    description:
+      "画面の見た目だけでなく、誰が入力し、どこで確認し、何をもって完了とするかを一緒に定義します。"
+  },
+  {
+    step: "03",
+    title: "改善が続く状態まで考える",
+    description:
+      "導入直後の満足度ではなく、更新のしやすさ、属人化の回避、段階導入のしやすさを重視します。"
+  }
+];
+
+const toolGroups = [
+  {
+    title: "設計と実装",
+    items: ["Astro", "TypeScript", "Tailwind CSS", "Content Collections", "GitHub Actions"]
+  },
+  {
+    title: "データと業務整理",
+    items: ["Supabase", "Markdown運用", "情報設計", "業務フロー整理", "運用設計"]
+  },
+  {
+    title: "AI活用",
+    items: ["LLM Workflow", "Prompt Design", "問い合わせ整理", "要約補助", "判断補助UI"]
+  }
+];
+
+const workingBeliefs = [
+  {
+    title: "システム導入を目的化しない",
+    description:
+      "入れること自体に価値はありません。誰が、いつ、どう使い、何をもって運用完了とするかまで設計して初めて効果になります。"
+  },
+  {
+    title: "AIは判断の前工程を圧縮する",
+    description:
+      "最終判断を丸ごと置き換えるのではなく、整理、要約、補助入力、確認漏れの抽出など、人が責任を持ちやすい位置に置きます。"
+  },
+  {
+    title: "改善を続けられる記録設計を作る",
+    description:
+      "単発の成功より、次の改善へつながるログが残ることを重視します。入力負荷と再利用性のバランスを崩さない設計を選びます。"
+  }
+];
+
+const projects = await getPublishedProjects();
+const posts = await getPublishedBlogPosts();
+const metrics = [
+  { value: String(projects.length).padStart(2, "0"), label: "Projects" },
+  { value: String(posts.length).padStart(2, "0"), label: "Articles" },
+  { value: "03", label: "Core Methods" }
+];
+---
+
+<BaseLayout
+  title="About"
+  description="製造業DX、AI活用、業務改善に向き合う姿勢と得意領域をまとめたページ。"
+>
+  <section class="section-space pb-14 pt-14 md:pb-20 md:pt-20">
+    <Container class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14">
+      <div class="space-y-6">
+        <p class="eyebrow">About</p>
+        <h1 class="page-title max-w-4xl">履歴の羅列ではなく、改善の進め方そのものを伝える。</h1>
+        <p class="lead-copy max-w-3xl">
+          製造業の現場改善では、システムを入れること自体が価値ではありません。情報の持ち方、入力の責任、確認の流れを設計し、現場で扱える単位まで落とし込んで初めて改善になります。
+        </p>
+      </div>
+
+      <aside class="surface-panel p-6 md:p-7">
+        <div class="space-y-5">
+          <p class="text-sm font-semibold uppercase tracking-[0.18em] text-sky-200/90">Specialties</p>
+          <div class="flex flex-wrap gap-2">
+            {strengths.map((item) => (
+              <span class="pill">{item}</span>
+            ))}
+          </div>
+          <p class="muted-copy text-sm">
+            ツール導入の成否を、機能の多さではなく、入力負荷、運用ルール、継続改善のしやすさで評価します。
+          </p>
+          <div class="grid gap-3 pt-2 sm:grid-cols-3 lg:grid-cols-1">
+            {metrics.map((item) => (
+              <div class="rounded-2xl border border-white/8 bg-black/15 px-4 py-4">
+                <p class="text-3xl font-semibold tracking-[-0.04em] text-white">{item.value}</p>
+                <p class="mt-2 text-xs uppercase tracking-[0.16em] text-slate-500">{item.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </aside>
+    </Container>
+  </section>
+
+  <section class="section-divider section-space">
+    <Container class="grid gap-5 lg:grid-cols-3">
+      {aboutSections.map((section) => (
+        <article class="surface-card p-6 md:p-7">
+          <div class="space-y-4">
+            <h2 class="text-2xl font-semibold tracking-[-0.03em] text-white">{section.title}</h2>
+            <p class="muted-copy text-sm">{section.description}</p>
+          </div>
+        </article>
+      ))}
+    </Container>
+  </section>
+
+  <section class="section-divider section-space">
+    <Container class="space-y-8">
+      <div class="max-w-3xl space-y-4">
+        <p class="eyebrow">Process</p>
+        <h2 class="section-title">改善を前に進めるための、実務寄りの進め方。</h2>
+      </div>
+      <div class="grid gap-5 lg:grid-cols-3">
+        {process.map((item) => (
+          <article class="surface-card p-6 md:p-7">
+            <div class="space-y-4">
+              <p class="text-sm font-semibold tracking-[0.18em] text-sky-200">STEP {item.step}</p>
+              <h3 class="text-xl font-semibold tracking-[-0.02em] text-white">{item.title}</h3>
+              <p class="muted-copy text-sm">{item.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <section class="section-divider section-space">
+    <Container class="space-y-8">
+      <div class="max-w-3xl space-y-4">
+        <p class="eyebrow">Tools and Methods</p>
+        <h2 class="section-title">使う技術は目的ではなく、現場で扱いやすい運用を作るための手段です。</h2>
+      </div>
+      <div class="grid gap-5 lg:grid-cols-3">
+        {toolGroups.map((group) => (
+          <article class="surface-card p-6 md:p-7">
+            <div class="space-y-4">
+              <h3 class="text-xl font-semibold tracking-[-0.02em] text-white">{group.title}</h3>
+              <div class="flex flex-wrap gap-2">
+                {group.items.map((item) => (
+                  <span class="pill">{item}</span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <section class="section-divider section-space">
+    <Container class="space-y-8">
+      <div class="max-w-3xl space-y-4">
+        <p class="eyebrow">Beliefs</p>
+        <h2 class="section-title">改善プロジェクトで一貫して守っている判断軸。</h2>
+      </div>
+      <div class="grid gap-5 lg:grid-cols-3">
+        {workingBeliefs.map((item) => (
+          <article class="surface-card p-6 md:p-7">
+            <div class="space-y-4">
+              <h3 class="text-xl font-semibold tracking-[-0.02em] text-white">{item.title}</h3>
+              <p class="muted-copy text-sm">{item.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <section class="section-divider section-space">
+    <Container>
+      <div class="surface-panel grid gap-6 p-6 md:grid-cols-[1fr_auto] md:items-end md:p-8">
+        <div class="space-y-4">
+          <p class="eyebrow">Explore</p>
+          <h2 class="section-title">実際の設計例と、判断軸を書いた記事の両方を見られる構成にしています。</h2>
+          <p class="lead-copy max-w-3xl">
+            実績とブログを分けているのは、成果物だけでなく、設計時に何を重視しているかまで伝えるためです。
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <a
+            href={withBase("/projects/")}
+            class="inline-flex items-center justify-center rounded-full bg-sky-300 px-6 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-200"
+          >
+            Projectsを見る
+          </a>
+          <a
+            href={withBase("/blog/")}
+            class="inline-flex items-center justify-center rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:border-sky-300/20 hover:bg-white/6"
+          >
+            Blogを読む
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

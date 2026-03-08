@@ -1,0 +1,249 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/ui/Container.astro";
+import ProjectCard from "../components/projects/ProjectCard.astro";
+import TagList from "../components/ui/TagList.astro";
+import { homeContent, siteConfig } from "../data/site";
+import { collectBlogTags, getPublishedBlogPosts, getPublishedProjects } from "../utils/content";
+import { formatCompactDate } from "../utils/dates";
+import { withBase } from "../utils/links";
+import { slugifyTaxonomyTerm } from "../utils/taxonomy";
+
+const focusAreas = [
+  {
+    title: "現場入力の負荷削減",
+    description:
+      "紙・Excel・口頭依頼に分散した情報を扱いやすいUIに置き換え、入力の心理的コストと二重転記を減らします。"
+  },
+  {
+    title: "AIを実務に接続",
+    description:
+      "議事録要約や問い合わせ補助で終わらせず、判断の手前にある整理作業や確認作業を具体的なフローへ落とし込みます。"
+  },
+  {
+    title: "改善を続けられる設計",
+    description:
+      "導入時点の見栄えだけでなく、運用ルール、責任分界、更新のしやすさまで含めて設計します。"
+  }
+];
+
+const operatingPrinciples = [
+  "現場ヒアリングをそのまま要件にせず、構造に分解して扱う",
+  "UIより先に、更新責任と例外処理の流れを決める",
+  "AIは判断者を置き換えるのではなく、判断の前工程を圧縮する"
+];
+
+const projects = await getPublishedProjects();
+const posts = await getPublishedBlogPosts();
+const selectedProjects = (
+  projects.some((project) => project.data.featured)
+    ? projects.filter((project) => project.data.featured)
+    : projects
+).slice(0, 3);
+const latestPosts = posts.slice(0, 3);
+const frequentTopics = collectBlogTags(posts).slice(0, 4);
+const stats = [
+  {
+    value: String(projects.length).padStart(2, "0"),
+    label: "Projects",
+    note: "公開中の実装・設計事例"
+  },
+  {
+    value: String(posts.length).padStart(2, "0"),
+    label: "Blog Posts",
+    note: "設計メモと実装ノート"
+  },
+  {
+    value: String(frequentTopics.length).padStart(2, "0"),
+    label: "Core Topics",
+    note: "継続的に扱う改善テーマ"
+  }
+];
+---
+
+<BaseLayout>
+  <section class="section-space pb-18 pt-14 md:pb-24 md:pt-20">
+    <Container class="grid items-end gap-10 lg:grid-cols-[1.3fr_0.7fr] lg:gap-14">
+      <div class="space-y-7">
+        <p class="eyebrow">{homeContent.eyebrow}</p>
+        <div class="space-y-5">
+          <h1 class="display-title max-w-5xl">{homeContent.title}</h1>
+          <p class="lead-copy max-w-3xl">{homeContent.description}</p>
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <a
+            href={withBase(homeContent.primaryCta.href)}
+            class="inline-flex items-center justify-center rounded-full bg-sky-300 px-6 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-200"
+          >
+            {homeContent.primaryCta.label}
+          </a>
+          <a
+            href={withBase(homeContent.secondaryCta.href)}
+            class="inline-flex items-center justify-center rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:border-sky-300/20 hover:bg-white/6"
+          >
+            {homeContent.secondaryCta.label}
+          </a>
+        </div>
+        <ul class="grid gap-3 pt-2 text-sm text-slate-300 sm:grid-cols-3">
+          <li class="surface-card p-4">現場課題の分解</li>
+          <li class="surface-card p-4">業務導線の再設計</li>
+          <li class="surface-card p-4">AI活用の運用設計</li>
+        </ul>
+      </div>
+
+      <aside class="surface-panel subtle-grid p-6 md:p-7">
+        <div class="space-y-6">
+          <div class="space-y-2">
+            <p class="text-sm font-semibold uppercase tracking-[0.18em] text-sky-200/90">Working Principles</p>
+            <h2 class="text-2xl font-semibold tracking-[-0.03em] text-white">
+              派手な演出より、改善が回り続ける構造を作る。
+            </h2>
+          </div>
+          <ul class="space-y-3 text-sm leading-7 text-slate-300">
+            {operatingPrinciples.map((item) => (
+              <li class="flex gap-3 rounded-2xl border border-white/8 bg-white/4 px-4 py-3">
+                <span class="mt-2 h-2 w-2 rounded-full bg-sky-300"></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <div class="grid gap-3 pt-2">
+            {stats.map((item) => (
+              <div class="rounded-2xl border border-white/8 bg-black/15 px-4 py-4">
+                <p class="text-3xl font-semibold tracking-[-0.04em] text-white">{item.value}</p>
+                <p class="mt-2 text-xs uppercase tracking-[0.16em] text-slate-500">{item.label}</p>
+                <p class="mt-2 text-sm text-slate-400">{item.note}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </aside>
+    </Container>
+  </section>
+
+  <section class="section-divider section-space">
+    <Container class="space-y-10">
+      <div class="max-w-3xl space-y-4">
+        <p class="eyebrow">Focus Areas</p>
+        <h2 class="section-title">課題を抽象論で終わらせず、実装可能な単位まで落とし込む。</h2>
+      </div>
+      <div class="grid gap-5 md:grid-cols-3">
+        {focusAreas.map((item) => (
+          <article class="surface-card p-6 md:p-7">
+            <div class="space-y-4">
+              <span class="pill">Core Theme</span>
+              <h3 class="text-xl font-semibold tracking-[-0.02em] text-white">{item.title}</h3>
+              <p class="muted-copy text-sm">{item.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <section class="section-divider section-space">
+    <Container class="space-y-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div class="max-w-3xl space-y-4">
+          <p class="eyebrow">Selected Projects</p>
+          <h2 class="section-title">実装と運用の両方を見るためのプロジェクト設計。</h2>
+        </div>
+        <a href={withBase("/projects/")} class="text-sm text-slate-300 transition duration-200 hover:text-white">
+          すべてのProjectsへ
+        </a>
+      </div>
+      <div class="grid gap-5 lg:grid-cols-3">
+        {selectedProjects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <section class="section-divider section-space">
+    <Container class="space-y-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div class="max-w-3xl space-y-4">
+          <p class="eyebrow">Latest Notes</p>
+          <h2 class="section-title">設計の判断軸と、AI活用の現実解を言語化する。</h2>
+        </div>
+        <a href={withBase("/blog/")} class="text-sm text-slate-300 transition duration-200 hover:text-white">
+          すべてのBlogへ
+        </a>
+      </div>
+      <div class="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+        <div class="space-y-5">
+          {latestPosts.map((post) => (
+            <article class="surface-card p-6 md:p-7">
+              <a href={withBase(`/blog/${post.id}/`)} class="block space-y-4">
+                <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.18em] text-slate-500">
+                  <time datetime={post.data.date.toISOString()}>{formatCompactDate(post.data.date)}</time>
+                  {post.data.updated && (
+                    <span class="rounded-full border border-white/8 px-2.5 py-1 text-[0.68rem] text-slate-400">
+                      Updated {formatCompactDate(post.data.updated)}
+                    </span>
+                  )}
+                </div>
+                <h3 class="text-xl font-semibold tracking-[-0.02em] text-white">{post.data.title}</h3>
+                <p class="muted-copy text-sm">{post.data.description}</p>
+                <TagList tags={post.data.tags} compact hrefPrefix="/blog/tags" />
+              </a>
+            </article>
+          ))}
+        </div>
+
+        <aside class="surface-panel p-6 md:p-7">
+          <div class="space-y-5">
+            <div>
+              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Frequent Topics</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                {frequentTopics.map((item) => (
+                  <a
+                    href={withBase(`/blog/tags/${slugifyTaxonomyTerm(item.tag)}/`)}
+                    class="pill transition duration-200 hover:border-sky-300/25 hover:bg-sky-400/10"
+                  >
+                    {item.tag} · {item.count}
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div class="rounded-3xl border border-white/8 bg-white/4 p-5">
+              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Reading Angle</p>
+              <p class="mt-3 text-sm leading-7 text-slate-300">
+                記事は技術紹介よりも、入力責任、例外処理、運用ルール、AIの責任分界など、現場で止まりやすい論点を中心に構成しています。
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <section class="section-divider section-space">
+    <Container>
+      <div class="surface-panel grid gap-8 p-6 md:grid-cols-[1fr_auto] md:items-end md:p-8">
+        <div class="space-y-4">
+          <p class="eyebrow">Work With Me</p>
+          <h2 class="section-title">現場理解と実装を切り分けず、一気通貫で改善を進める。</h2>
+          <p class="lead-copy max-w-3xl">
+            課題の整理、入力導線の再設計、AI活用の実務接続、社内向けツールの設計と実装までを、運用に耐える粒度で設計します。
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <a
+            href={withBase("/about/")}
+            class="inline-flex items-center justify-center rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:border-sky-300/20 hover:bg-white/6"
+          >
+            Aboutを見る
+          </a>
+          <a
+            href={withBase(siteConfig.contact.pagePath)}
+            class="inline-flex items-center justify-center rounded-full bg-sky-300 px-6 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-200"
+          >
+            相談する
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

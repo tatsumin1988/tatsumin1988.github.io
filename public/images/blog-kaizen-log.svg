@@ -1,0 +1,22 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" fill="#090B11"/>
+  <circle cx="1020" cy="580" r="240" fill="#A78BFA" fill-opacity="0.1"/>
+  <rect x="48" y="48" width="1104" height="624" rx="36" fill="url(#paint0_linear)" stroke="#1E293B"/>
+  <rect x="96" y="156" width="430" height="394" rx="28" fill="#0F172A" stroke="#334155"/>
+  <rect x="134" y="206" width="178" height="18" rx="9" fill="#7DD3FC"/>
+  <rect x="134" y="254" width="320" height="14" rx="7" fill="#475569"/>
+  <rect x="134" y="292" width="280" height="14" rx="7" fill="#334155"/>
+  <rect x="134" y="356" width="352" height="120" rx="18" fill="#111827" stroke="#334155"/>
+  <rect x="664" y="180" width="388" height="92" rx="22" fill="#1E1B4B" stroke="#8B5CF6"/>
+  <rect x="664" y="312" width="388" height="92" rx="22" fill="#0F172A" stroke="#334155"/>
+  <rect x="664" y="444" width="388" height="92" rx="22" fill="#0F172A" stroke="#334155"/>
+  <text x="96" y="102" fill="#C4B5FD" font-family="Segoe UI, Arial, sans-serif" font-size="24" letter-spacing="4">KAIZEN LOG</text>
+  <text x="96" y="600" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700">小さな改善を再利用可能な資産にする</text>
+  <text x="96" y="648" fill="#94A3B8" font-family="Segoe UI, Arial, sans-serif" font-size="24">記録の粒度と会議導線を一緒に設計する</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="80" y1="66" x2="1118" y2="654" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827" stop-opacity="0.98"/>
+      <stop offset="1" stop-color="#1E1B4B" stop-opacity="0.34"/>
+    </linearGradient>
+  </defs>
+</svg>

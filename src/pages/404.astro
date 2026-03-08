@@ -1,0 +1,60 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/ui/Container.astro";
+import { mainNavigation, siteConfig } from "../data/site";
+import { withBase } from "../utils/links";
+---
+
+<BaseLayout title="404" description={siteConfig.notFound.description} noIndex>
+  <section class="section-space pt-18">
+    <Container class="grid gap-8 lg:grid-cols-[1fr_0.42fr] lg:items-end">
+      <div class="space-y-6">
+        <p class="eyebrow">404 / Not Found</p>
+        <h1 class="display-title max-w-4xl">{siteConfig.notFound.title}</h1>
+        <p class="lead-copy max-w-3xl">{siteConfig.notFound.description}</p>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <a
+            href={withBase("/")}
+            class="inline-flex items-center justify-center rounded-full bg-sky-300 px-6 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-200"
+          >
+            Homeへ戻る
+          </a>
+          <a
+            href={withBase("/projects/")}
+            class="inline-flex items-center justify-center rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:border-sky-300/20 hover:bg-white/6"
+          >
+            Projectsを見る
+          </a>
+        </div>
+      </div>
+
+      <aside class="surface-panel subtle-grid p-6 md:p-7">
+        <div class="space-y-6">
+          <div>
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Quick Links</p>
+            <nav class="mt-4 grid gap-2">
+              {mainNavigation.map((item) => (
+                <a
+                  href={withBase(item.href)}
+                  class="rounded-2xl border border-white/8 px-4 py-3 text-sm text-slate-300 transition duration-200 hover:border-sky-300/20 hover:bg-white/6 hover:text-white"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Contact</p>
+            <p class="mt-3 text-sm leading-7 text-slate-300">{siteConfig.contactMessage}</p>
+            <a
+              href={withBase(siteConfig.contact.pagePath)}
+              class="mt-4 inline-flex rounded-full border border-white/10 px-4 py-2 text-sm text-slate-200 transition duration-200 hover:border-sky-300/20 hover:bg-white/6 hover:text-white"
+            >
+              相談フォームへ
+            </a>
+          </div>
+        </div>
+      </aside>
+    </Container>
+  </section>
+</BaseLayout>

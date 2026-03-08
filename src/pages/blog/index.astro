@@ -1,0 +1,59 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/ui/Container.astro";
+import BlogCard from "../../components/blog/BlogCard.astro";
+import { collectBlogTags, getPublishedBlogPosts } from "../../utils/content";
+import { withBase } from "../../utils/links";
+import { slugifyTaxonomyTerm } from "../../utils/taxonomy";
+
+const posts = await getPublishedBlogPosts();
+const tags = collectBlogTags(posts).slice(0, 10);
+---
+
+<BaseLayout
+  title="Blog"
+  description="製造業DX、AI活用、業務改善の設計メモと実装ノートをまとめた記事一覧。"
+>
+  <section class="section-space pb-12 pt-16 md:pb-16">
+    <Container class="space-y-8">
+      <div class="grid gap-8 lg:grid-cols-[1fr_0.38fr] lg:items-end">
+        <div class="space-y-4">
+          <p class="eyebrow">Blog</p>
+          <h1 class="page-title max-w-5xl">設計の判断軸と、AI活用を現場実装へつなぐメモ。</h1>
+          <p class="lead-copy max-w-3xl">
+            ツールの紹介ではなく、現場で運用が止まりやすいポイント、入力設計、AI導入時の責任分界、改善を継続するための記録設計を中心に書いています。
+          </p>
+        </div>
+
+        <aside class="surface-panel p-6 md:p-7">
+          <div class="space-y-5">
+            <div>
+              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Overview</p>
+              <p class="mt-3 text-4xl font-semibold tracking-[-0.04em] text-white">{posts.length}</p>
+              <p class="mt-2 text-sm text-slate-400">公開記事数</p>
+            </div>
+            <div>
+              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Frequent Topics</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                {tags.map((item) => (
+                  <a
+                    href={withBase(`/blog/tags/${slugifyTaxonomyTerm(item.tag)}/`)}
+                    class="pill transition duration-200 hover:border-sky-300/25 hover:bg-sky-400/10"
+                  >
+                    {item.tag} · {item.count}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <section class="section-divider section-space pt-10">
+    <Container class="space-y-6">
+      {posts.map((post) => <BlogCard post={post} />)}
+    </Container>
+  </section>
+</BaseLayout>

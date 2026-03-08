@@ -1,0 +1,20 @@
+---
+interface Props {
+  as?: keyof HTMLElementTagNameMap;
+  width?: "default" | "reading";
+  class?: string;
+}
+
+const {
+  as = "div",
+  width = "default",
+  class: className = ""
+} = Astro.props as Props;
+
+const Tag = as;
+const shellClass = width === "reading" ? "reading-shell" : "container-shell";
+---
+
+<Tag class:list={[shellClass, className]}>
+  <slot />
+</Tag>

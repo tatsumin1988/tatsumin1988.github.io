@@ -1,0 +1,24 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" fill="#090B11"/>
+  <circle cx="180" cy="120" r="200" fill="#60A5FA" fill-opacity="0.12"/>
+  <rect x="48" y="48" width="1104" height="624" rx="36" fill="url(#paint0_linear)" stroke="#1E293B"/>
+  <rect x="114" y="170" width="468" height="316" rx="28" fill="#0F172A" stroke="#334155"/>
+  <circle cx="270" cy="274" r="72" fill="#082F49" stroke="#38BDF8"/>
+  <path d="M258 274H282" stroke="#7DD3FC" stroke-width="12" stroke-linecap="round"/>
+  <path d="M270 262V286" stroke="#7DD3FC" stroke-width="12" stroke-linecap="round"/>
+  <rect x="378" y="230" width="150" height="18" rx="9" fill="#475569"/>
+  <rect x="378" y="270" width="120" height="18" rx="9" fill="#334155"/>
+  <rect x="378" y="338" width="124" height="50" rx="14" fill="#111827" stroke="#334155"/>
+  <rect x="676" y="172" width="368" height="72" rx="18" fill="#0C4A6E" stroke="#38BDF8"/>
+  <rect x="676" y="274" width="368" height="72" rx="18" fill="#0F172A" stroke="#334155"/>
+  <rect x="676" y="376" width="368" height="72" rx="18" fill="#0F172A" stroke="#334155"/>
+  <text x="96" y="102" fill="#7DD3FC" font-family="Segoe UI, Arial, sans-serif" font-size="24" letter-spacing="4">AI WORKFLOW</text>
+  <text x="96" y="566" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700">AI導入で嫌われる構造を外す</text>
+  <text x="96" y="620" fill="#94A3B8" font-family="Segoe UI, Arial, sans-serif" font-size="24">精度より先に責任分界と例外処理を決める</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="74" y1="68" x2="1114" y2="656" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A" stop-opacity="0.98"/>
+      <stop offset="1" stop-color="#111827" stop-opacity="0.74"/>
+    </linearGradient>
+  </defs>
+</svg>

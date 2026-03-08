@@ -1,0 +1,72 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Container from "../../../components/ui/Container.astro";
+import BlogCard from "../../../components/blog/BlogCard.astro";
+import { collectBlogTags, getPublishedBlogPosts } from "../../../utils/content";
+import { slugifyTaxonomyTerm } from "../../../utils/taxonomy";
+import { withBase } from "../../../utils/links";
+
+export async function getStaticPaths() {
+  const posts = await getPublishedBlogPosts();
+  const tags = collectBlogTags(posts);
+
+  return tags.map(({ tag, count }) => ({
+    params: { tag: slugifyTaxonomyTerm(tag) },
+    props: { tag, count }
+  }));
+}
+
+const { tag, count } = Astro.props as { tag: string; count: number };
+const allPosts = await getPublishedBlogPosts();
+const posts = allPosts.filter((post) => post.data.tags.includes(tag));
+const topTags = collectBlogTags(allPosts).slice(0, 10);
+---
+
+<BaseLayout
+  title={`Tag: ${tag}`}
+  description={`「${tag}」に関する記事一覧。製造業DX、AI活用、業務改善の観点から整理したエントリをまとめています。`}
+>
+  <section class="section-space pb-12 pt-16 md:pb-16">
+    <Container class="grid gap-8 lg:grid-cols-[1fr_0.38fr] lg:items-end">
+      <div class="space-y-4">
+        <p class="eyebrow">Blog Tag Archive</p>
+        <h1 class="page-title max-w-5xl">タグ: {tag}</h1>
+        <p class="lead-copy max-w-3xl">
+          「{tag}」に関連する設計メモと実装ノートをまとめています。現場運用で詰まりやすい点や、改善を定着させるための判断軸を中心に整理しています。
+        </p>
+      </div>
+
+      <aside class="surface-panel p-6 md:p-7">
+        <div class="space-y-5">
+          <div>
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Tag Overview</p>
+            <p class="mt-3 text-4xl font-semibold tracking-[-0.04em] text-white">{count}</p>
+            <p class="mt-2 text-sm text-slate-400">このタグの記事数</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Other Topics</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              {topTags.map((item) => (
+                <a
+                  href={withBase(`/blog/tags/${slugifyTaxonomyTerm(item.tag)}/`)}
+                  class:list={[
+                    "pill transition duration-200 hover:border-sky-300/25 hover:bg-sky-400/10",
+                    item.tag === tag ? "border-sky-300/30 bg-sky-400/14" : ""
+                  ]}
+                >
+                  {item.tag} · {item.count}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </aside>
+    </Container>
+  </section>
+
+  <section class="section-divider section-space pt-10">
+    <Container class="space-y-6">
+      {posts.map((post) => <BlogCard post={post} />)}
+    </Container>
+  </section>
+</BaseLayout>

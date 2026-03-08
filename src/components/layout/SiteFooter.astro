@@ -1,0 +1,57 @@
+---
+import Container from "../ui/Container.astro";
+import { mainNavigation, siteConfig } from "../../data/site";
+import { withBase } from "../../utils/links";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-white/6 bg-[rgba(6,9,15,0.84)]">
+  <Container class="grid gap-10 py-12 md:grid-cols-[1.5fr_1fr_1fr] md:gap-12">
+    <div class="space-y-4">
+      <p class="eyebrow">Portfolio / Engineering Notes</p>
+      <h2 class="max-w-md text-2xl font-semibold tracking-[-0.03em] text-white">
+        現場で使える改善を、設計と実装の両方から積み上げる。
+      </h2>
+      <p class="max-w-xl text-sm leading-7 text-slate-400">
+        製造業DX、AI活用、業務設計を横断しながら、入力負荷の削減、判断の平準化、改善運用の継続性を重視したプロダクトとドキュメントを構築します。
+      </p>
+    </div>
+
+    <div class="space-y-3">
+      <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Navigate</h3>
+      <ul class="space-y-2 text-sm text-slate-300">
+        {mainNavigation.map((item) => (
+          <li>
+            <a href={withBase(item.href)} class="transition duration-200 hover:text-white">
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="space-y-3">
+      <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Profiles</h3>
+      <ul class="space-y-2 text-sm text-slate-300">
+        {siteConfig.socialLinks.map((item) => (
+          <li>
+            <a href={item.href} target="_blank" rel="noreferrer" class="transition duration-200 hover:text-white">
+              {item.label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a href={withBase(siteConfig.contact.pagePath)} class="transition duration-200 hover:text-white">
+            相談フォーム
+          </a>
+        </li>
+      </ul>
+    </div>
+  </Container>
+
+  <Container class="flex flex-col gap-2 border-t border-white/6 py-5 text-sm text-slate-500 md:flex-row md:items-center md:justify-between">
+    <p>&copy; {year} {siteConfig.author.name}. All rights reserved.</p>
+    <p>Built with Astro, Tailwind CSS, and a strong bias for readable systems.</p>
+  </Container>
+</footer>

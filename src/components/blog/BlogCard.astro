@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatCompactDate } from "../../utils/dates";
+import { withBase } from "../../utils/links";
+import TagList from "../ui/TagList.astro";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props as Props;
+const coverImage = withBase(post.data.cover_image ?? "/og/default.svg");
+---
+
+<article class="surface-card overflow-hidden">
+  <a href={withBase(`/blog/${post.id}/`)} class="group grid h-full md:grid-cols-[0.42fr_0.58fr] md:items-stretch">
+    <div class="relative min-h-56 overflow-hidden border-b border-white/8 md:min-h-full md:border-b-0 md:border-r">
+      <img
+        src={coverImage}
+        alt={post.data.title}
+        loading="lazy"
+        class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+      />
+    </div>
+    <div class="flex h-full flex-col gap-5 p-6 md:p-7">
+      <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.14em] text-slate-500">
+        <time datetime={post.data.date.toISOString()}>{formatCompactDate(post.data.date)}</time>
+        {post.data.updated && (
+          <span class="rounded-full border border-white/8 px-2.5 py-1 text-[0.68rem] text-slate-400">
+            Updated {formatCompactDate(post.data.updated)}
+          </span>
+        )}
+      </div>
+      <div class="space-y-3">
+        <h2 class="text-2xl font-semibold tracking-[-0.03em] text-white">{post.data.title}</h2>
+        <p class="muted-copy text-sm">{post.data.description}</p>
+      </div>
+      <TagList tags={post.data.tags} compact class="mt-auto" hrefPrefix="/blog/tags" />
+    </div>
+  </a>
+</article>
