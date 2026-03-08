@@ -68,7 +68,18 @@ const defaults = {
 
             <form class="grid gap-5">
               <label class="grid gap-2">
-                <span class="text-sm font-medium text-slate-200">月間の対象件数</span>
+                <span class="flex items-center justify-between gap-4">
+                  <span class="text-sm font-medium text-slate-200">月間の対象件数</span>
+                  <input
+                    id="monthlyJobsInput"
+                    type="number"
+                    min="10"
+                    max="2000"
+                    step="10"
+                    value={defaults.monthlyJobs}
+                    class="w-28 rounded-xl border border-white/10 bg-[rgba(7,11,18,0.84)] px-3 py-2 text-right text-sm text-white outline-none transition duration-200 focus:border-sky-300/30"
+                  />
+                </span>
                 <input id="monthlyJobs" type="range" min="10" max="2000" step="10" value={defaults.monthlyJobs} />
                 <div class="flex items-center justify-between text-sm text-slate-400">
                   <span>10件</span>
@@ -79,7 +90,18 @@ const defaults = {
 
               <div class="grid gap-5 md:grid-cols-2">
                 <label class="grid gap-2">
-                  <span class="text-sm font-medium text-slate-200">改善前の1件あたり作業時間</span>
+                  <span class="flex items-center justify-between gap-4">
+                    <span class="text-sm font-medium text-slate-200">改善前の1件あたり作業時間</span>
+                    <input
+                      id="currentMinutesInput"
+                      type="number"
+                      min="3"
+                      max="120"
+                      step="1"
+                      value={defaults.currentMinutes}
+                      class="w-24 rounded-xl border border-white/10 bg-[rgba(7,11,18,0.84)] px-3 py-2 text-right text-sm text-white outline-none transition duration-200 focus:border-sky-300/30"
+                    />
+                  </span>
                   <input id="currentMinutes" type="range" min="3" max="120" step="1" value={defaults.currentMinutes} />
                   <div class="flex items-center justify-between text-sm text-slate-400">
                     <span>3分</span>
@@ -89,7 +111,18 @@ const defaults = {
                 </label>
 
                 <label class="grid gap-2">
-                  <span class="text-sm font-medium text-slate-200">改善後の1件あたり作業時間</span>
+                  <span class="flex items-center justify-between gap-4">
+                    <span class="text-sm font-medium text-slate-200">改善後の1件あたり作業時間</span>
+                    <input
+                      id="futureMinutesInput"
+                      type="number"
+                      min="1"
+                      max="60"
+                      step="1"
+                      value={defaults.futureMinutes}
+                      class="w-24 rounded-xl border border-white/10 bg-[rgba(7,11,18,0.84)] px-3 py-2 text-right text-sm text-white outline-none transition duration-200 focus:border-sky-300/30"
+                    />
+                  </span>
                   <input id="futureMinutes" type="range" min="1" max="60" step="1" value={defaults.futureMinutes} />
                   <div class="flex items-center justify-between text-sm text-slate-400">
                     <span>1分</span>
@@ -101,7 +134,18 @@ const defaults = {
 
               <div class="grid gap-5 md:grid-cols-2">
                 <label class="grid gap-2">
-                  <span class="text-sm font-medium text-slate-200">対象業務の時間単価</span>
+                  <span class="flex items-center justify-between gap-4">
+                    <span class="text-sm font-medium text-slate-200">対象業務の時間単価</span>
+                    <input
+                      id="hourlyCostInput"
+                      type="number"
+                      min="1200"
+                      max="6000"
+                      step="100"
+                      value={defaults.hourlyCost}
+                      class="w-28 rounded-xl border border-white/10 bg-[rgba(7,11,18,0.84)] px-3 py-2 text-right text-sm text-white outline-none transition duration-200 focus:border-sky-300/30"
+                    />
+                  </span>
                   <input id="hourlyCost" type="range" min="1200" max="6000" step="100" value={defaults.hourlyCost} />
                   <div class="flex items-center justify-between text-sm text-slate-400">
                     <span>1,200円</span>
@@ -111,7 +155,18 @@ const defaults = {
                 </label>
 
                 <label class="grid gap-2">
-                  <span class="text-sm font-medium text-slate-200">現場への定着率</span>
+                  <span class="flex items-center justify-between gap-4">
+                    <span class="text-sm font-medium text-slate-200">現場への定着率</span>
+                    <input
+                      id="adoptionRateInput"
+                      type="number"
+                      min="40"
+                      max="100"
+                      step="1"
+                      value={defaults.adoptionRate}
+                      class="w-24 rounded-xl border border-white/10 bg-[rgba(7,11,18,0.84)] px-3 py-2 text-right text-sm text-white outline-none transition duration-200 focus:border-sky-300/30"
+                    />
+                  </span>
                   <input id="adoptionRate" type="range" min="40" max="100" step="1" value={defaults.adoptionRate} />
                   <div class="flex items-center justify-between text-sm text-slate-400">
                     <span>40%</span>
@@ -123,7 +178,18 @@ const defaults = {
 
               <div class="grid gap-5 md:grid-cols-2">
                 <label class="grid gap-2">
-                  <span class="text-sm font-medium text-slate-200">初期導入費</span>
+                  <span class="flex items-center justify-between gap-4">
+                    <span class="text-sm font-medium text-slate-200">初期導入費</span>
+                    <input
+                      id="implementationCostInput"
+                      type="number"
+                      min="10000"
+                      max="5000000"
+                      step="10000"
+                      value={defaults.implementationCost}
+                      class="w-32 rounded-xl border border-white/10 bg-[rgba(7,11,18,0.84)] px-3 py-2 text-right text-sm text-white outline-none transition duration-200 focus:border-sky-300/30"
+                    />
+                  </span>
                   <input id="implementationCost" type="range" min="10000" max="5000000" step="10000" value={defaults.implementationCost} />
                   <div class="flex items-center justify-between text-sm text-slate-400">
                     <span>1万円</span>
@@ -133,7 +199,18 @@ const defaults = {
                 </label>
 
                 <label class="grid gap-2">
-                  <span class="text-sm font-medium text-slate-200">月次運用費</span>
+                  <span class="flex items-center justify-between gap-4">
+                    <span class="text-sm font-medium text-slate-200">月次運用費</span>
+                    <input
+                      id="monthlyRunningCostInput"
+                      type="number"
+                      min="0"
+                      max="300000"
+                      step="5000"
+                      value={defaults.monthlyRunningCost}
+                      class="w-32 rounded-xl border border-white/10 bg-[rgba(7,11,18,0.84)] px-3 py-2 text-right text-sm text-white outline-none transition duration-200 focus:border-sky-300/30"
+                    />
+                  </span>
                   <input id="monthlyRunningCost" type="range" min="0" max="300000" step="5000" value={defaults.monthlyRunningCost} />
                   <div class="flex items-center justify-between text-sm text-slate-400">
                     <span>0円</span>
@@ -273,12 +350,19 @@ const defaults = {
 
       const elements = {
         monthlyJobs: document.getElementById("monthlyJobs"),
+        monthlyJobsInput: document.getElementById("monthlyJobsInput"),
         currentMinutes: document.getElementById("currentMinutes"),
+        currentMinutesInput: document.getElementById("currentMinutesInput"),
         futureMinutes: document.getElementById("futureMinutes"),
+        futureMinutesInput: document.getElementById("futureMinutesInput"),
         hourlyCost: document.getElementById("hourlyCost"),
+        hourlyCostInput: document.getElementById("hourlyCostInput"),
         implementationCost: document.getElementById("implementationCost"),
+        implementationCostInput: document.getElementById("implementationCostInput"),
         monthlyRunningCost: document.getElementById("monthlyRunningCost"),
+        monthlyRunningCostInput: document.getElementById("monthlyRunningCostInput"),
         adoptionRate: document.getElementById("adoptionRate"),
+        adoptionRateInput: document.getElementById("adoptionRateInput"),
         monthlyJobsValue: document.getElementById("monthlyJobsValue"),
         currentMinutesValue: document.getElementById("currentMinutesValue"),
         futureMinutesValue: document.getElementById("futureMinutesValue"),
@@ -296,6 +380,42 @@ const defaults = {
         afterPercent: document.getElementById("afterPercent"),
         beforeBar: document.getElementById("beforeBar"),
         afterBar: document.getElementById("afterBar")
+      };
+
+      const ranges = {
+        monthlyJobs: { min: 10, max: 2000, step: 10 },
+        currentMinutes: { min: 3, max: 120, step: 1 },
+        futureMinutes: { min: 1, max: 60, step: 1 },
+        hourlyCost: { min: 1200, max: 6000, step: 100 },
+        implementationCost: { min: 10000, max: 5000000, step: 10000 },
+        monthlyRunningCost: { min: 0, max: 300000, step: 5000 },
+        adoptionRate: { min: 40, max: 100, step: 1 }
+      };
+
+      const clampToRange = (key, rawValue) => {
+        const range = ranges[key];
+        const numericValue = Number(rawValue);
+        const safeValue = Number.isFinite(numericValue) ? numericValue : state[key];
+        const clamped = Math.min(range.max, Math.max(range.min, safeValue));
+        const stepped = Math.round(clamped / range.step) * range.step;
+        return Math.min(range.max, Math.max(range.min, stepped));
+      };
+
+      const syncControls = () => {
+        elements.monthlyJobs.value = String(state.monthlyJobs);
+        elements.monthlyJobsInput.value = String(state.monthlyJobs);
+        elements.currentMinutes.value = String(state.currentMinutes);
+        elements.currentMinutesInput.value = String(state.currentMinutes);
+        elements.futureMinutes.value = String(state.futureMinutes);
+        elements.futureMinutesInput.value = String(state.futureMinutes);
+        elements.hourlyCost.value = String(state.hourlyCost);
+        elements.hourlyCostInput.value = String(state.hourlyCost);
+        elements.implementationCost.value = String(state.implementationCost);
+        elements.implementationCostInput.value = String(state.implementationCost);
+        elements.monthlyRunningCost.value = String(state.monthlyRunningCost);
+        elements.monthlyRunningCostInput.value = String(state.monthlyRunningCost);
+        elements.adoptionRate.value = String(state.adoptionRate);
+        elements.adoptionRateInput.value = String(state.adoptionRate);
       };
 
       const syncValueLabels = () => {
@@ -344,24 +464,34 @@ const defaults = {
         elements.afterBar.style.width = `${(afterCost / baseCost) * 100}%`;
       };
 
-      const bindRange = (key) => {
-        const element = elements[key];
+      const syncRelatedMinutes = () => {
+        if (state.futureMinutes > state.currentMinutes) {
+          state.futureMinutes = state.currentMinutes;
+        }
+      };
 
-        element?.addEventListener("input", () => {
-          state[key] = Number(element.value);
+      const updateState = (key, rawValue) => {
+        state[key] = clampToRange(key, rawValue);
+        syncRelatedMinutes();
+        syncControls();
+        syncValueLabels();
+        recalc();
+      };
 
-          if (key === "futureMinutes" && state.futureMinutes > state.currentMinutes) {
-            state.futureMinutes = state.currentMinutes;
-            elements.futureMinutes.value = String(state.futureMinutes);
-          }
+      const bindControl = (key) => {
+        const rangeElement = elements[key];
+        const inputElement = elements[`${key}Input`];
 
-          if (key === "currentMinutes" && state.futureMinutes > state.currentMinutes) {
-            state.futureMinutes = state.currentMinutes;
-            elements.futureMinutes.value = String(state.futureMinutes);
-          }
+        rangeElement?.addEventListener("input", () => {
+          updateState(key, rangeElement.value);
+        });
 
-          syncValueLabels();
-          recalc();
+        inputElement?.addEventListener("input", () => {
+          updateState(key, inputElement.value);
+        });
+
+        inputElement?.addEventListener("blur", () => {
+          updateState(key, inputElement.value);
         });
       };
 
@@ -373,8 +503,9 @@ const defaults = {
         "implementationCost",
         "monthlyRunningCost",
         "adoptionRate"
-      ].forEach(bindRange);
+      ].forEach(bindControl);
 
+      syncControls();
       syncValueLabels();
       recalc();
     }
