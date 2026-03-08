@@ -11,19 +11,25 @@ import { slugifyTaxonomyTerm } from "../utils/taxonomy";
 
 const focusAreas = [
   {
+    number: "01",
     title: "現場入力の負荷削減",
     description:
-      "紙・Excel・口頭依頼に分散した情報を扱いやすいUIに置き換え、入力の心理的コストと二重転記を減らします。"
+      "紙・Excel・口頭依頼に分散した情報を、一度の入力で後工程まで流せる形に組み替えます。",
+    outcome: "入力の重さを減らす"
   },
   {
+    number: "02",
     title: "AIを実務に接続",
     description:
-      "議事録要約や問い合わせ補助で終わらせず、判断の手前にある整理作業や確認作業を具体的なフローへ落とし込みます。"
+      "要約や分類で終わらせず、確認、差し戻し、採用判断まで含めた運用フローにAIを接続します。",
+    outcome: "判断前の作業を圧縮する"
   },
   {
+    number: "03",
     title: "改善を続けられる設計",
     description:
-      "導入時点の見栄えだけでなく、運用ルール、責任分界、更新のしやすさまで含めて設計します。"
+      "導入時の見栄えだけでなく、更新責任、例外処理、引き継ぎやすさまで含めて設計します。",
+    outcome: "改善を止めない"
   }
 ];
 
@@ -31,6 +37,30 @@ const operatingPrinciples = [
   "現場ヒアリングをそのまま要件にせず、構造に分解して扱う",
   "UIより先に、更新責任と例外処理の流れを決める",
   "AIは判断者を置き換えるのではなく、判断の前工程を圧縮する"
+];
+
+const improvementFlow = [
+  {
+    step: "01",
+    title: "入力を一つに寄せる",
+    description: "点検、引き継ぎ、問い合わせなど分散した入口を整理します。"
+  },
+  {
+    step: "02",
+    title: "確認の責任を決める",
+    description: "誰が見て、どこで完了にするかをUIより先に定義します。"
+  },
+  {
+    step: "03",
+    title: "集計と改善へつなぐ",
+    description: "溜めるだけで終わらないよう、次の判断に使える形へ整えます。"
+  }
+];
+
+const proofPoints = [
+  "入力責任と確認責任を分けて設計する",
+  "属人化した改善知見を再利用可能にする",
+  "AIを運用フローに乗せるところまで設計する"
 ];
 
 const projects = await getPublishedProjects();
@@ -42,29 +72,16 @@ const selectedProjects = (
 ).slice(0, 3);
 const latestPosts = posts.slice(0, 3);
 const frequentTopics = collectBlogTags(posts).slice(0, 4);
-const stats = [
-  {
-    value: String(projects.length).padStart(2, "0"),
-    label: "Projects",
-    note: "公開中の実装・設計事例"
-  },
-  {
-    value: String(posts.length).padStart(2, "0"),
-    label: "Blog Posts",
-    note: "設計メモと実装ノート"
-  },
-  {
-    value: String(frequentTopics.length).padStart(2, "0"),
-    label: "Core Topics",
-    note: "継続的に扱う改善テーマ"
-  }
-];
+const leadProject = selectedProjects[0] ?? projects[0];
+const supportingProjects = selectedProjects.filter((project) => project.id !== leadProject?.id).slice(0, 2);
+const featuredPost = latestPosts[0] ?? posts[0];
+const secondaryPosts = latestPosts.filter((post) => post.id !== featuredPost?.id).slice(0, 2);
 ---
 
 <BaseLayout>
-  <section class="section-space pb-18 pt-14 md:pb-24 md:pt-20">
-    <Container class="grid items-end gap-10 lg:grid-cols-[1.3fr_0.7fr] lg:gap-14">
-      <div class="space-y-7">
+  <section class="section-space pb-14 pt-14 md:pb-18 md:pt-20">
+    <Container class="grid items-start gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
+      <div class="space-y-8">
         <p class="eyebrow">{homeContent.eyebrow}</p>
         <div class="space-y-5">
           <h1 class="display-title max-w-5xl">{homeContent.title}</h1>
@@ -84,56 +101,95 @@ const stats = [
             {homeContent.secondaryCta.label}
           </a>
         </div>
-        <ul class="grid gap-3 pt-2 text-sm text-slate-300 sm:grid-cols-3">
-          <li class="surface-card p-4">現場課題の分解</li>
-          <li class="surface-card p-4">業務導線の再設計</li>
-          <li class="surface-card p-4">AI活用の運用設計</li>
+        <ul class="grid gap-3 text-sm text-slate-300">
+          {proofPoints.map((item) => (
+            <li class="surface-quiet flex items-start gap-3 px-4 py-4">
+              <span class="mt-1.5 h-2 w-2 rounded-full bg-sky-300"></span>
+              <span>{item}</span>
+            </li>
+          ))}
         </ul>
+        <div class="flex flex-wrap gap-2">
+          <span class="signal-chip">掲載実績 {projects.length}件</span>
+          <span class="signal-chip">公開ノート {posts.length}本</span>
+          <span class="signal-chip">主要テーマ {frequentTopics.length}軸</span>
+        </div>
       </div>
 
-      <aside class="surface-panel subtle-grid p-6 md:p-7">
-        <div class="space-y-6">
-          <div class="space-y-2">
-            <p class="text-sm font-semibold uppercase tracking-[0.18em] text-sky-200/90">Working Principles</p>
-            <h2 class="text-2xl font-semibold tracking-[-0.03em] text-white">
-              派手な演出より、改善が回り続ける構造を作る。
+      <aside class="surface-feature p-6 md:p-8">
+        <div class="relative z-10 space-y-6">
+          <div class="space-y-3">
+            <p class="info-label">改善設計の見取り図</p>
+            <h2 class="text-3xl font-semibold tracking-[-0.04em] text-white">
+              情報が流れる構造を先に作り、UIとAIを後から乗せる。
             </h2>
+            <p class="text-sm leading-7 text-slate-300">
+              見た目を整える前に、入力、確認、活用の流れを定義します。現場で止まりやすいのは、機能不足よりも責任分界の曖昧さだからです。
+            </p>
           </div>
-          <ul class="space-y-3 text-sm leading-7 text-slate-300">
-            {operatingPrinciples.map((item) => (
-              <li class="flex gap-3 rounded-2xl border border-white/8 bg-white/4 px-4 py-3">
-                <span class="mt-2 h-2 w-2 rounded-full bg-sky-300"></span>
-                <span>{item}</span>
-              </li>
+
+          <div class="grid gap-4 md:grid-cols-3">
+            {improvementFlow.map((item) => (
+              <article class="feature-step">
+                <span class="feature-number">{item.step}</span>
+                <h3 class="mt-5 text-lg font-semibold tracking-[-0.02em] text-white">{item.title}</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-300">{item.description}</p>
+              </article>
             ))}
-          </ul>
-          <div class="grid gap-3 pt-2">
-            {stats.map((item) => (
-              <div class="rounded-2xl border border-white/8 bg-black/15 px-4 py-4">
-                <p class="text-3xl font-semibold tracking-[-0.04em] text-white">{item.value}</p>
-                <p class="mt-2 text-xs uppercase tracking-[0.16em] text-slate-500">{item.label}</p>
-                <p class="mt-2 text-sm text-slate-400">{item.note}</p>
+          </div>
+
+          {leadProject && (
+            <div class="grid gap-4 lg:grid-cols-[1.12fr_0.88fr]">
+              <a href={withBase(`/projects/${leadProject.id}/`)} class="surface-quiet block p-5 transition duration-200 hover:border-sky-300/20">
+                <p class="info-label">代表ケース</p>
+                <h3 class="mt-3 text-2xl font-semibold tracking-[-0.03em] text-white">{leadProject.data.title}</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-300">{leadProject.data.summary}</p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="signal-chip">{leadProject.data.status}</span>
+                  {leadProject.data.tech_stack.slice(0, 2).map((item) => (
+                    <span class="pill">{item}</span>
+                  ))}
+                </div>
+              </a>
+
+              <div class="surface-quiet p-5">
+                <p class="info-label">設計時に見るポイント</p>
+                <ul class="mt-4 space-y-3 text-sm leading-7 text-slate-300">
+                  {operatingPrinciples.map((item) => (
+                    <li class="flex gap-3">
+                      <span class="mt-2 h-1.5 w-1.5 rounded-full bg-sky-300"></span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ))}
-          </div>
+            </div>
+          )}
         </div>
       </aside>
     </Container>
   </section>
 
   <section class="section-divider section-space">
-    <Container class="space-y-10">
-      <div class="max-w-3xl space-y-4">
-        <p class="eyebrow">Focus Areas</p>
+    <Container class="grid gap-10 lg:grid-cols-[0.4fr_0.6fr] lg:gap-14">
+      <div class="space-y-6">
+        <p class="eyebrow eyebrow-muted">改善テーマ</p>
         <h2 class="section-title">課題を抽象論で終わらせず、実装可能な単位まで落とし込む。</h2>
+        <p class="lead-copy">
+          改善テーマごとに必要なのは、画面の多さではなく、入力と確認の責任をどう切るかです。UI、AI、運用設計を別々にせず、同じ流れとして組み立てます。
+        </p>
       </div>
-      <div class="grid gap-5 md:grid-cols-3">
-        {focusAreas.map((item) => (
-          <article class="surface-card p-6 md:p-7">
-            <div class="space-y-4">
-              <span class="pill">Core Theme</span>
-              <h3 class="text-xl font-semibold tracking-[-0.02em] text-white">{item.title}</h3>
-              <p class="muted-copy text-sm">{item.description}</p>
+
+      <div class="space-y-5">
+        {focusAreas.map((item, index) => (
+          <article class:list={["surface-card p-6 md:p-7", index === 1 ? "lg:ml-8" : "", index === 2 ? "lg:ml-16" : ""]}>
+            <div class="grid gap-5 md:grid-cols-[auto_1fr_auto] md:items-start">
+              <span class="feature-number">{item.number}</span>
+              <div class="space-y-3">
+                <h3 class="text-2xl font-semibold tracking-[-0.03em] text-white">{item.title}</h3>
+                <p class="muted-copy text-sm">{item.description}</p>
+              </div>
+              <div class="surface-quiet h-fit px-4 py-3 text-sm text-slate-300">{item.outcome}</div>
             </div>
           </article>
         ))}
@@ -145,18 +201,53 @@ const stats = [
     <Container class="space-y-8">
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div class="max-w-3xl space-y-4">
-          <p class="eyebrow">Selected Projects</p>
+          <p class="eyebrow eyebrow-muted">代表実績</p>
           <h2 class="section-title">実装と運用の両方を見るためのプロジェクト設計。</h2>
         </div>
         <a href={withBase("/projects/")} class="text-sm text-slate-300 transition duration-200 hover:text-white">
-          すべてのProjectsへ
+          実績一覧を見る
         </a>
       </div>
-      <div class="grid gap-5 lg:grid-cols-3">
-        {selectedProjects.map((project) => (
-          <ProjectCard project={project} />
-        ))}
-      </div>
+      {leadProject && (
+        <div class="grid gap-6 xl:grid-cols-[1.18fr_0.82fr]">
+          <a href={withBase(`/projects/${leadProject.id}/`)} class="surface-feature grid overflow-hidden lg:grid-cols-[0.52fr_0.48fr]">
+            <div class="relative min-h-[18rem] border-b border-white/8 lg:min-h-full lg:border-b-0 lg:border-r">
+              <img
+                src={withBase(leadProject.data.cover_image ?? "/og/default.svg")}
+                alt={leadProject.data.title}
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="relative z-10 flex flex-col gap-5 p-6 md:p-8">
+              <div class="flex flex-wrap gap-2">
+                <span class="signal-chip">{leadProject.data.status}</span>
+                {leadProject.data.featured && <span class="signal-chip">代表掲載</span>}
+              </div>
+              <div class="space-y-4">
+                <h3 class="text-3xl font-semibold tracking-[-0.04em] text-white">{leadProject.data.title}</h3>
+                <p class="text-sm leading-7 text-slate-300">{leadProject.data.summary}</p>
+              </div>
+              <div class="grid gap-4">
+                <div class="surface-quiet p-4">
+                  <p class="info-label">課題背景</p>
+                  <p class="mt-3 text-sm leading-7 text-slate-300">{leadProject.data.problem}</p>
+                </div>
+                <div class="surface-quiet p-4">
+                  <p class="info-label">解決アプローチ</p>
+                  <p class="mt-3 text-sm leading-7 text-slate-300">{leadProject.data.solution}</p>
+                </div>
+              </div>
+              <TagList tags={leadProject.data.tech_stack} compact />
+            </div>
+          </a>
+
+          <div class="grid gap-6">
+            {supportingProjects.map((project) => (
+              <ProjectCard project={project} />
+            ))}
+          </div>
+        </div>
+      )}
     </Container>
   </section>
 
@@ -164,23 +255,51 @@ const stats = [
     <Container class="space-y-8">
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div class="max-w-3xl space-y-4">
-          <p class="eyebrow">Latest Notes</p>
+          <p class="eyebrow eyebrow-muted">最新ノート</p>
           <h2 class="section-title">設計の判断軸と、AI活用の現実解を言語化する。</h2>
         </div>
         <a href={withBase("/blog/")} class="text-sm text-slate-300 transition duration-200 hover:text-white">
-          すべてのBlogへ
+          ブログ一覧を見る
         </a>
       </div>
-      <div class="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
-        <div class="space-y-5">
-          {latestPosts.map((post) => (
+      <div class="grid gap-6 xl:grid-cols-[1.06fr_0.94fr]">
+        {featuredPost && (
+          <a href={withBase(`/blog/${featuredPost.id}/`)} class="surface-feature grid overflow-hidden lg:grid-cols-[0.52fr_0.48fr]">
+            <div class="relative min-h-[18rem] border-b border-white/8 lg:min-h-full lg:border-b-0 lg:border-r">
+              <img
+                src={withBase(featuredPost.data.cover_image ?? "/og/default.svg")}
+                alt={featuredPost.data.title}
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="relative z-10 flex flex-col gap-5 p-6 md:p-8">
+              <div class="flex flex-wrap items-center gap-3 text-xs tracking-[0.14em] text-slate-400">
+                <time datetime={featuredPost.data.date.toISOString()}>{formatCompactDate(featuredPost.data.date)}</time>
+                {featuredPost.data.updated && (
+                  <span class="rounded-full border border-white/8 px-3 py-1 text-[0.68rem] text-slate-300">
+                    更新 {formatCompactDate(featuredPost.data.updated)}
+                  </span>
+                )}
+              </div>
+              <div class="space-y-4">
+                <p class="info-label">注目記事</p>
+                <h3 class="text-3xl font-semibold tracking-[-0.04em] text-white">{featuredPost.data.title}</h3>
+                <p class="text-sm leading-7 text-slate-300">{featuredPost.data.description}</p>
+              </div>
+              <TagList tags={featuredPost.data.tags} compact hrefPrefix="/blog/tags" />
+            </div>
+          </a>
+        )}
+
+        <aside class="grid gap-5">
+          {secondaryPosts.map((post) => (
             <article class="surface-card p-6 md:p-7">
               <a href={withBase(`/blog/${post.id}/`)} class="block space-y-4">
-                <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.18em] text-slate-500">
+                <div class="flex flex-wrap items-center gap-3 text-xs tracking-[0.14em] text-slate-400">
                   <time datetime={post.data.date.toISOString()}>{formatCompactDate(post.data.date)}</time>
                   {post.data.updated && (
-                    <span class="rounded-full border border-white/8 px-2.5 py-1 text-[0.68rem] text-slate-400">
-                      Updated {formatCompactDate(post.data.updated)}
+                    <span class="rounded-full border border-white/8 px-3 py-1 text-[0.68rem] text-slate-300">
+                      更新 {formatCompactDate(post.data.updated)}
                     </span>
                   )}
                 </div>
@@ -190,28 +309,28 @@ const stats = [
               </a>
             </article>
           ))}
-        </div>
 
-        <aside class="surface-panel p-6 md:p-7">
-          <div class="space-y-5">
-            <div>
-              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Frequent Topics</p>
-              <div class="mt-3 flex flex-wrap gap-2">
-                {frequentTopics.map((item) => (
-                  <a
-                    href={withBase(`/blog/tags/${slugifyTaxonomyTerm(item.tag)}/`)}
-                    class="pill transition duration-200 hover:border-sky-300/25 hover:bg-sky-400/10"
-                  >
-                    {item.tag} · {item.count}
-                  </a>
-                ))}
+          <div class="surface-panel p-6 md:p-7">
+            <div class="space-y-5">
+              <div>
+                <p class="info-label">よく扱うテーマ</p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  {frequentTopics.map((item) => (
+                    <a
+                      href={withBase(`/blog/tags/${slugifyTaxonomyTerm(item.tag)}/`)}
+                      class="signal-chip transition duration-200 hover:border-sky-300/25 hover:bg-sky-400/10"
+                    >
+                      {item.tag} · {item.count}
+                    </a>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div class="rounded-3xl border border-white/8 bg-white/4 p-5">
-              <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Reading Angle</p>
-              <p class="mt-3 text-sm leading-7 text-slate-300">
-                記事は技術紹介よりも、入力責任、例外処理、運用ルール、AIの責任分界など、現場で止まりやすい論点を中心に構成しています。
-              </p>
+              <div class="surface-quiet p-5">
+                <p class="info-label">読むとわかること</p>
+                <p class="mt-3 text-sm leading-7 text-slate-300">
+                  記事では、入力責任、例外処理、運用ルール、AIの責任分界など、現場で止まりやすい論点を整理して扱います。
+                </p>
+              </div>
             </div>
           </div>
         </aside>
@@ -221,9 +340,9 @@ const stats = [
 
   <section class="section-divider section-space">
     <Container>
-      <div class="surface-panel grid gap-8 p-6 md:grid-cols-[1fr_auto] md:items-end md:p-8">
+      <div class="surface-feature grid gap-8 p-6 md:grid-cols-[1fr_auto] md:items-end md:p-8">
         <div class="space-y-4">
-          <p class="eyebrow">Work With Me</p>
+          <p class="eyebrow eyebrow-muted">相談できること</p>
           <h2 class="section-title">現場理解と実装を切り分けず、一気通貫で改善を進める。</h2>
           <p class="lead-copy max-w-3xl">
             課題の整理、入力導線の再設計、AI活用の実務接続、社内向けツールの設計と実装までを、運用に耐える粒度で設計します。
@@ -234,7 +353,7 @@ const stats = [
             href={withBase("/about/")}
             class="inline-flex items-center justify-center rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:border-sky-300/20 hover:bg-white/6"
           >
-            Aboutを見る
+            概要を見る
           </a>
           <a
             href={withBase(siteConfig.contact.pagePath)}

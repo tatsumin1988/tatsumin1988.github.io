@@ -21,9 +21,9 @@ const {
   <ul class:list={["flex flex-wrap gap-2", className]}>
     {tags.map((tag) => {
       const badgeClass = [
-        "inline-flex items-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition duration-200",
-        compact ? "px-2.5 py-1 text-[0.72rem]" : "px-3 py-1.5 text-xs",
-        hrefPrefix ? "hover:border-sky-300/20 hover:bg-sky-400/10 hover:text-white" : ""
+        "inline-flex items-center rounded-full border border-white/8 bg-slate-950/78 text-slate-200 transition duration-200",
+        compact ? "px-2.5 py-1 text-[0.72rem]" : "px-3.5 py-1.5 text-[0.78rem]",
+        hrefPrefix ? "hover:border-sky-300/28 hover:bg-sky-400/10 hover:text-white" : ""
       ];
       const href = hrefPrefix ? withBase(`${hrefPrefix}/${slugifyTaxonomyTerm(tag)}/`) : null;
 
@@ -31,10 +31,14 @@ const {
         <li>
           {href ? (
             <a href={href} class:list={badgeClass}>
+              <span class="mr-1.5 h-1.5 w-1.5 rounded-full bg-sky-300/75"></span>
               {tag}
             </a>
           ) : (
-            <span class:list={badgeClass}>{tag}</span>
+            <span class:list={badgeClass}>
+              <span class="mr-1.5 h-1.5 w-1.5 rounded-full bg-slate-400/70"></span>
+              {tag}
+            </span>
           )}
         </li>
       );

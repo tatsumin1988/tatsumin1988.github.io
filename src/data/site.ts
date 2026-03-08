@@ -5,7 +5,7 @@ export const siteConfig = {
   locale: "ja-JP",
   author: {
     name: "Tatsumi",
-    role: "Manufacturing DX / AI Workflow Engineer"
+    role: "製造業DX・AI活用エンジニア"
   },
   socialLinks: [
     {
@@ -39,23 +39,23 @@ export const siteConfig = {
 } as const;
 
 export const mainNavigation = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about/" },
-  { label: "Projects", href: "/projects/" },
-  { label: "Blog", href: "/blog/" }
+  { label: "トップ", href: "/" },
+  { label: "概要", href: "/about/" },
+  { label: "実績", href: "/projects/" },
+  { label: "ブログ", href: "/blog/" }
 ] as const;
 
 export const homeContent = {
-  eyebrow: "Manufacturing DX × AI Utilization × Workflow Improvement",
+  eyebrow: "製造業DX / AI活用 / 業務改善",
   title: "現場に効く設計と実装で、業務改善を前に進める。",
   description:
     "製造現場の情報分断、属人化、手作業の滞留に向き合い、AIとソフトウェア実装を使って改善の再現性を高めるための実践ポートフォリオです。",
   primaryCta: {
-    label: "Projectsを見る",
+    label: "実績を見る",
     href: "/projects/"
   },
   secondaryCta: {
-    label: "Blogを読む",
+    label: "ブログを読む",
     href: "/blog/"
   }
 } as const;

@@ -71,9 +71,9 @@ const workingBeliefs = [
 const projects = await getPublishedProjects();
 const posts = await getPublishedBlogPosts();
 const metrics = [
-  { value: String(projects.length).padStart(2, "0"), label: "Projects" },
-  { value: String(posts.length).padStart(2, "0"), label: "Articles" },
-  { value: "03", label: "Core Methods" }
+  { value: String(projects.length), label: "掲載中の実績" },
+  { value: String(posts.length), label: "公開ノート" },
+  { value: "3", label: "主な進め方" }
 ];
 ---
 
@@ -82,33 +82,36 @@ const metrics = [
   description="製造業DX、AI活用、業務改善に向き合う姿勢と得意領域をまとめたページ。"
 >
   <section class="section-space pb-14 pt-14 md:pb-20 md:pt-20">
-    <Container class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14">
+    <Container class="grid gap-10 lg:grid-cols-[0.94fr_1.06fr] lg:gap-14">
       <div class="space-y-6">
-        <p class="eyebrow">About</p>
+        <p class="eyebrow">概要</p>
         <h1 class="page-title max-w-4xl">履歴の羅列ではなく、改善の進め方そのものを伝える。</h1>
         <p class="lead-copy max-w-3xl">
           製造業の現場改善では、システムを入れること自体が価値ではありません。情報の持ち方、入力の責任、確認の流れを設計し、現場で扱える単位まで落とし込んで初めて改善になります。
         </p>
+        <div class="grid gap-3 sm:grid-cols-3">
+          {metrics.map((item) => (
+            <div class="metric-tile">
+              <p class="text-3xl font-semibold tracking-[-0.04em] text-white">{item.value}</p>
+              <p class="mt-2 text-sm text-slate-400">{item.label}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <aside class="surface-panel p-6 md:p-7">
-        <div class="space-y-5">
-          <p class="text-sm font-semibold uppercase tracking-[0.18em] text-sky-200/90">Specialties</p>
+      <aside class="surface-feature p-6 md:p-8">
+        <div class="relative z-10 space-y-5">
+          <p class="info-label">専門領域</p>
           <div class="flex flex-wrap gap-2">
             {strengths.map((item) => (
-              <span class="pill">{item}</span>
+              <span class="signal-chip">{item}</span>
             ))}
           </div>
-          <p class="muted-copy text-sm">
-            ツール導入の成否を、機能の多さではなく、入力負荷、運用ルール、継続改善のしやすさで評価します。
-          </p>
-          <div class="grid gap-3 pt-2 sm:grid-cols-3 lg:grid-cols-1">
-            {metrics.map((item) => (
-              <div class="rounded-2xl border border-white/8 bg-black/15 px-4 py-4">
-                <p class="text-3xl font-semibold tracking-[-0.04em] text-white">{item.value}</p>
-                <p class="mt-2 text-xs uppercase tracking-[0.16em] text-slate-500">{item.label}</p>
-              </div>
-            ))}
+          <div class="surface-quiet p-5">
+            <p class="info-label">重視していること</p>
+            <p class="mt-3 text-sm leading-7 text-slate-300">
+              ツール導入の成否を、機能の多さではなく、入力負荷、運用ルール、継続改善のしやすさで評価します。必要なのは派手さより、現場で止まらない構造です。
+            </p>
           </div>
         </div>
       </aside>
@@ -116,31 +119,54 @@ const metrics = [
   </section>
 
   <section class="section-divider section-space">
-    <Container class="grid gap-5 lg:grid-cols-3">
-      {aboutSections.map((section) => (
-        <article class="surface-card p-6 md:p-7">
-          <div class="space-y-4">
-            <h2 class="text-2xl font-semibold tracking-[-0.03em] text-white">{section.title}</h2>
-            <p class="muted-copy text-sm">{section.description}</p>
+    <Container class="space-y-6">
+      <div class="max-w-3xl space-y-4">
+        <p class="eyebrow eyebrow-muted">向き合う視点</p>
+        <h2 class="section-title">何に困っているのかを、入力と運用の構造まで掘り下げる。</h2>
+      </div>
+      <article class="surface-feature p-6 md:p-8">
+        <div class="relative z-10 grid gap-6 lg:grid-cols-[0.4fr_0.6fr] lg:items-start">
+          <div>
+            <p class="info-label">{aboutSections[0]?.title}</p>
+            <h3 class="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white">
+              現場の困りごとを、そのまま機能要求に変換しない。
+            </h3>
           </div>
-        </article>
-      ))}
+          <p class="text-sm leading-8 text-slate-300">{aboutSections[0]?.description}</p>
+        </div>
+      </article>
+      <div class="grid gap-5 lg:grid-cols-2">
+        {aboutSections.slice(1).map((section) => (
+          <article class="surface-card p-6 md:p-7">
+            <div class="space-y-4">
+              <p class="info-label">{section.title}</p>
+              <h3 class="text-xl font-semibold tracking-[-0.02em] text-white">{section.title}</h3>
+              <p class="muted-copy text-sm">{section.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
     </Container>
   </section>
 
   <section class="section-divider section-space">
-    <Container class="space-y-8">
-      <div class="max-w-3xl space-y-4">
-        <p class="eyebrow">Process</p>
+    <Container class="grid gap-10 lg:grid-cols-[0.36fr_0.64fr] lg:gap-14">
+      <div class="space-y-4">
+        <p class="eyebrow eyebrow-muted">進め方</p>
         <h2 class="section-title">改善を前に進めるための、実務寄りの進め方。</h2>
+        <p class="lead-copy">
+          画面やツールの話を先にせず、現場の入力、確認、責任分界を定義してからUIへ落とします。ここを飛ばすと、改善は見た目だけで止まります。
+        </p>
       </div>
-      <div class="grid gap-5 lg:grid-cols-3">
+
+      <div class="space-y-8">
         {process.map((item) => (
-          <article class="surface-card p-6 md:p-7">
-            <div class="space-y-4">
-              <p class="text-sm font-semibold tracking-[0.18em] text-sky-200">STEP {item.step}</p>
-              <h3 class="text-xl font-semibold tracking-[-0.02em] text-white">{item.title}</h3>
-              <p class="muted-copy text-sm">{item.description}</p>
+          <article class="timeline-step">
+            <span class="timeline-node">{item.step}</span>
+            <div class="surface-card p-6 md:p-7">
+              <p class="info-label">STEP {item.step}</p>
+              <h3 class="mt-4 text-2xl font-semibold tracking-[-0.03em] text-white">{item.title}</h3>
+              <p class="mt-4 text-sm leading-7 text-slate-300">{item.description}</p>
             </div>
           </article>
         ))}
@@ -151,19 +177,20 @@ const metrics = [
   <section class="section-divider section-space">
     <Container class="space-y-8">
       <div class="max-w-3xl space-y-4">
-        <p class="eyebrow">Tools and Methods</p>
-        <h2 class="section-title">使う技術は目的ではなく、現場で扱いやすい運用を作るための手段です。</h2>
+        <p class="eyebrow eyebrow-muted">手段と道具</p>
+        <h2 class="section-title">使う技術は目的ではなく、運用を成立させるための手段です。</h2>
       </div>
-      <div class="grid gap-5 lg:grid-cols-3">
+      <div class="surface-panel divide-y divide-white/8">
         {toolGroups.map((group) => (
-          <article class="surface-card p-6 md:p-7">
+          <article class="grid gap-5 p-6 md:grid-cols-[0.28fr_0.72fr] md:p-7">
             <div class="space-y-4">
-              <h3 class="text-xl font-semibold tracking-[-0.02em] text-white">{group.title}</h3>
-              <div class="flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <span class="pill">{item}</span>
-                ))}
-              </div>
+              <p class="info-label">{group.title}</p>
+              <h3 class="text-2xl font-semibold tracking-[-0.03em] text-white">{group.title}</h3>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <span class="pill">{item}</span>
+              ))}
             </div>
           </article>
         ))}
@@ -174,15 +201,15 @@ const metrics = [
   <section class="section-divider section-space">
     <Container class="space-y-8">
       <div class="max-w-3xl space-y-4">
-        <p class="eyebrow">Beliefs</p>
+        <p class="eyebrow eyebrow-muted">判断軸</p>
         <h2 class="section-title">改善プロジェクトで一貫して守っている判断軸。</h2>
       </div>
-      <div class="grid gap-5 lg:grid-cols-3">
+      <div class="space-y-4">
         {workingBeliefs.map((item) => (
-          <article class="surface-card p-6 md:p-7">
-            <div class="space-y-4">
-              <h3 class="text-xl font-semibold tracking-[-0.02em] text-white">{item.title}</h3>
-              <p class="muted-copy text-sm">{item.description}</p>
+          <article class="belief-strip p-6 md:p-7">
+            <div class="grid gap-4 md:grid-cols-[0.34fr_0.66fr] md:items-start">
+              <h3 class="text-2xl font-semibold tracking-[-0.03em] text-white">{item.title}</h3>
+              <p class="text-sm leading-7 text-slate-300">{item.description}</p>
             </div>
           </article>
         ))}
@@ -192,9 +219,9 @@ const metrics = [
 
   <section class="section-divider section-space">
     <Container>
-      <div class="surface-panel grid gap-6 p-6 md:grid-cols-[1fr_auto] md:items-end md:p-8">
+      <div class="surface-feature grid gap-6 p-6 md:grid-cols-[1fr_auto] md:items-end md:p-8">
         <div class="space-y-4">
-          <p class="eyebrow">Explore</p>
+          <p class="eyebrow eyebrow-muted">次に見るページ</p>
           <h2 class="section-title">実際の設計例と、判断軸を書いた記事の両方を見られる構成にしています。</h2>
           <p class="lead-copy max-w-3xl">
             実績とブログを分けているのは、成果物だけでなく、設計時に何を重視しているかまで伝えるためです。
@@ -205,13 +232,13 @@ const metrics = [
             href={withBase("/projects/")}
             class="inline-flex items-center justify-center rounded-full bg-sky-300 px-6 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-200"
           >
-            Projectsを見る
+            実績を見る
           </a>
           <a
             href={withBase("/blog/")}
             class="inline-flex items-center justify-center rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:border-sky-300/20 hover:bg-white/6"
           >
-            Blogを読む
+            ブログを読む
           </a>
         </div>
       </div>
