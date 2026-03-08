@@ -4,11 +4,11 @@ import Container from "../../components/ui/Container.astro";
 import { withBase } from "../../utils/links";
 
 const defaults = {
-  monthlyJobs: 420,
+  monthlyJobs: 120,
   currentMinutes: 18,
   futureMinutes: 8,
   hourlyCost: 2400,
-  implementationCost: 480000,
+  implementationCost: 180000,
   monthlyRunningCost: 30000,
   adoptionRate: 85
 };
@@ -69,9 +69,9 @@ const defaults = {
             <form class="grid gap-5">
               <label class="grid gap-2">
                 <span class="text-sm font-medium text-slate-200">月間の対象件数</span>
-                <input id="monthlyJobs" type="range" min="50" max="2000" step="10" value={defaults.monthlyJobs} />
+                <input id="monthlyJobs" type="range" min="10" max="2000" step="10" value={defaults.monthlyJobs} />
                 <div class="flex items-center justify-between text-sm text-slate-400">
-                  <span>50件</span>
+                  <span>10件</span>
                   <strong id="monthlyJobsValue" class="text-white">{defaults.monthlyJobs}件</strong>
                   <span>2000件</span>
                 </div>
@@ -80,21 +80,21 @@ const defaults = {
               <div class="grid gap-5 md:grid-cols-2">
                 <label class="grid gap-2">
                   <span class="text-sm font-medium text-slate-200">改善前の1件あたり作業時間</span>
-                  <input id="currentMinutes" type="range" min="3" max="60" step="1" value={defaults.currentMinutes} />
+                  <input id="currentMinutes" type="range" min="3" max="120" step="1" value={defaults.currentMinutes} />
                   <div class="flex items-center justify-between text-sm text-slate-400">
                     <span>3分</span>
                     <strong id="currentMinutesValue" class="text-white">{defaults.currentMinutes}分</strong>
-                    <span>60分</span>
+                    <span>120分</span>
                   </div>
                 </label>
 
                 <label class="grid gap-2">
                   <span class="text-sm font-medium text-slate-200">改善後の1件あたり作業時間</span>
-                  <input id="futureMinutes" type="range" min="1" max="40" step="1" value={defaults.futureMinutes} />
+                  <input id="futureMinutes" type="range" min="1" max="60" step="1" value={defaults.futureMinutes} />
                   <div class="flex items-center justify-between text-sm text-slate-400">
                     <span>1分</span>
                     <strong id="futureMinutesValue" class="text-white">{defaults.futureMinutes}分</strong>
-                    <span>40分</span>
+                    <span>60分</span>
                   </div>
                 </label>
               </div>
@@ -124,9 +124,9 @@ const defaults = {
               <div class="grid gap-5 md:grid-cols-2">
                 <label class="grid gap-2">
                   <span class="text-sm font-medium text-slate-200">初期導入費</span>
-                  <input id="implementationCost" type="range" min="100000" max="5000000" step="50000" value={defaults.implementationCost} />
+                  <input id="implementationCost" type="range" min="10000" max="5000000" step="10000" value={defaults.implementationCost} />
                   <div class="flex items-center justify-between text-sm text-slate-400">
-                    <span>10万円</span>
+                    <span>1万円</span>
                     <strong id="implementationCostValue" class="text-white">¥{defaults.implementationCost.toLocaleString("ja-JP")}</strong>
                     <span>500万円</span>
                   </div>
