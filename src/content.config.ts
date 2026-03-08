@@ -22,6 +22,7 @@ const projects = defineCollection({
     summary: z.string(),
     problem: z.string(),
     solution: z.string(),
+    project_type: z.enum(["case_study", "concept_demo"]).default("case_study"),
     tech_stack: z.array(z.string()).default([]),
     status: z.enum(["公開中", "社内利用", "試作", "改善継続中"]),
     links: z
@@ -32,6 +33,10 @@ const projects = defineCollection({
         })
       )
       .default([]),
+    demo_url: z.string().url().optional(),
+    proof_points: z.array(z.string()).default([]),
+    audience: z.string().optional(),
+    disclaimer: z.string().optional(),
     cover_image: z.string().optional(),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false)

@@ -1,0 +1,23 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" fill="#090B11"/>
+  <circle cx="1022" cy="116" r="214" fill="#22C55E" fill-opacity="0.12"/>
+  <rect x="48" y="48" width="1104" height="624" rx="36" fill="url(#paint0_linear)" stroke="#1E293B"/>
+  <rect x="110" y="152" width="418" height="396" rx="28" fill="#0F172A" stroke="#334155"/>
+  <rect x="156" y="198" width="166" height="18" rx="9" fill="#86EFAC"/>
+  <rect x="156" y="240" width="292" height="14" rx="7" fill="#475569"/>
+  <rect x="156" y="298" width="330" height="56" rx="16" fill="#111827" stroke="#334155"/>
+  <rect x="156" y="378" width="330" height="56" rx="16" fill="#111827" stroke="#334155"/>
+  <rect x="156" y="458" width="330" height="56" rx="16" fill="#052E16" stroke="#22C55E"/>
+  <rect x="668" y="178" width="380" height="94" rx="22" fill="#052E16" stroke="#22C55E"/>
+  <rect x="668" y="314" width="380" height="94" rx="22" fill="#0F172A" stroke="#334155"/>
+  <rect x="668" y="450" width="380" height="94" rx="22" fill="#0F172A" stroke="#334155"/>
+  <text x="96" y="102" fill="#86EFAC" font-family="Segoe UI, Arial, sans-serif" font-size="24" letter-spacing="4">CONCEPT DEMO / ROI SIMULATOR</text>
+  <text x="96" y="614" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700">DX導入ROIシミュレーター</text>
+  <text x="96" y="662" fill="#94A3B8" font-family="Segoe UI, Arial, sans-serif" font-size="24">削減コストと投資回収ラインを、その場で試算する試作ツール</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="74" y1="70" x2="1118" y2="656" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827" stop-opacity="0.98"/>
+      <stop offset="1" stop-color="#052E16" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -11,10 +11,12 @@ interface Props {
 const { project } = Astro.props as Props;
 const coverImage = withBase(project.data.cover_image ?? "/og/default.svg");
 const coverIsSvg = coverImage.endsWith(".svg");
+const isConceptDemo = project.data.project_type === "concept_demo";
 const shortProblem =
   project.data.problem.length > 68 ? `${project.data.problem.slice(0, 68).trim()}…` : project.data.problem;
 const shortSolution =
   project.data.solution.length > 68 ? `${project.data.solution.slice(0, 68).trim()}…` : project.data.solution;
+const proofPoints = project.data.proof_points.slice(0, 2);
 ---
 
 <article class="surface-card overflow-hidden">
@@ -32,6 +34,11 @@ const shortSolution =
     </div>
     <div class="flex h-full flex-col gap-5 p-6 md:p-7">
       <div class="flex flex-wrap items-center gap-3">
+        {isConceptDemo && (
+          <span class="inline-flex items-center rounded-full border border-sky-300/20 bg-sky-400/10 px-3 py-1 text-xs font-medium text-sky-100">
+            Concept Demo
+          </span>
+        )}
         <StatusBadge status={project.data.status} />
         {project.data.featured && (
           <span class="inline-flex items-center rounded-full border border-white/10 px-3 py-1 text-xs font-medium text-slate-200">
@@ -46,12 +53,23 @@ const shortSolution =
       <div class="mt-auto space-y-3">
         <div class="grid gap-3 text-sm text-slate-300">
           <div class="surface-quiet px-4 py-3">
-            <p class="info-label">対象課題</p>
+            <p class="info-label">{isConceptDemo ? "想定課題" : "対象課題"}</p>
             <p class="mt-2 leading-7">{shortProblem}</p>
           </div>
           <div class="surface-quiet px-4 py-3">
-            <p class="info-label">主な打ち手</p>
-            <p class="mt-2 leading-7">{shortSolution}</p>
+            <p class="info-label">{isConceptDemo ? "証明したい実装力" : "主な打ち手"}</p>
+            {isConceptDemo && proofPoints.length > 0 ? (
+              <ul class="mt-2 space-y-2 leading-7">
+                {proofPoints.map((item) => (
+                  <li class="flex gap-2">
+                    <span class="mt-2 h-1.5 w-1.5 rounded-full bg-sky-300"></span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="mt-2 leading-7">{shortSolution}</p>
+            )}
           </div>
         </div>
         <TagList tags={project.data.tech_stack.slice(0, 3)} compact />
