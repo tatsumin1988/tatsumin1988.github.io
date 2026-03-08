@@ -10,6 +10,7 @@ interface Props {
 
 const { project } = Astro.props as Props;
 const coverImage = withBase(project.data.cover_image ?? "/og/default.svg");
+const coverIsSvg = coverImage.endsWith(".svg");
 const shortProblem =
   project.data.problem.length > 68 ? `${project.data.problem.slice(0, 68).trim()}…` : project.data.problem;
 const shortSolution =
@@ -19,7 +20,15 @@ const shortSolution =
 <article class="surface-card overflow-hidden">
   <a href={withBase(`/projects/${project.id}/`)} class="flex h-full flex-col">
     <div class="relative aspect-[4/3] overflow-hidden border-b border-white/8">
-      <img src={coverImage} alt={project.data.title} loading="lazy" class="h-full w-full object-cover" />
+      <img
+        src={coverImage}
+        alt={project.data.title}
+        loading="lazy"
+        class:list={[
+          "h-full w-full",
+          coverIsSvg ? "bg-slate-950/80 object-contain p-4" : "object-cover"
+        ]}
+      />
     </div>
     <div class="flex h-full flex-col gap-5 p-6 md:p-7">
       <div class="flex flex-wrap items-center gap-3">

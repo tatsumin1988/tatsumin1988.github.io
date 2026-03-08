@@ -12,6 +12,8 @@ const posts = await getPublishedBlogPosts();
 const tags = collectBlogTags(posts).slice(0, 10);
 const featuredPost = posts[0];
 const listPosts = posts.slice(1);
+const featuredCover = featuredPost ? withBase(featuredPost.data.cover_image ?? "/og/default.svg") : null;
+const featuredCoverIsSvg = featuredCover?.endsWith(".svg");
 ---
 
 <BaseLayout
@@ -34,9 +36,12 @@ const listPosts = posts.slice(1);
             <a href={withBase(`/blog/${featuredPost.id}/`)} class="grid h-full lg:grid-cols-[0.52fr_0.48fr]">
               <div class="relative aspect-[4/3] overflow-hidden border-b border-white/8 lg:aspect-auto lg:border-b-0 lg:border-r">
                 <img
-                  src={withBase(featuredPost.data.cover_image ?? "/og/default.svg")}
+                  src={featuredCover!}
                   alt={featuredPost.data.title}
-                  class="h-full w-full object-cover"
+                  class:list={[
+                    "h-full w-full",
+                    featuredCoverIsSvg ? "bg-slate-950/80 object-contain p-5" : "object-cover"
+                  ]}
                 />
               </div>
               <div class="relative z-10 flex h-full flex-col gap-5 p-6 md:p-8">

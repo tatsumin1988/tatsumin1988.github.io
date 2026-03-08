@@ -10,6 +10,7 @@ interface Props {
 
 const { post } = Astro.props as Props;
 const coverImage = withBase(post.data.cover_image ?? "/og/default.svg");
+const coverIsSvg = coverImage.endsWith(".svg");
 ---
 
 <article class="surface-card overflow-hidden">
@@ -19,7 +20,10 @@ const coverImage = withBase(post.data.cover_image ?? "/og/default.svg");
         src={coverImage}
         alt={post.data.title}
         loading="lazy"
-        class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+        class:list={[
+          "h-full w-full transition duration-300 group-hover:scale-[1.02]",
+          coverIsSvg ? "bg-slate-950/80 object-contain p-4" : "object-cover"
+        ]}
       />
     </div>
     <div class="flex h-full flex-col gap-5 p-6 md:p-7">
