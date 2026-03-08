@@ -34,13 +34,18 @@ const featuredCoverIsSvg = featuredCover?.endsWith(".svg");
         {featuredPost && (
           <aside class="surface-feature overflow-hidden">
             <a href={withBase(`/blog/${featuredPost.id}/`)} class="grid h-full lg:grid-cols-[0.52fr_0.48fr]">
-              <div class="relative aspect-[4/3] overflow-hidden border-b border-white/8 lg:aspect-auto lg:border-b-0 lg:border-r">
+              <div
+                class:list={[
+                  "cover-frame border-b border-white/8 lg:aspect-auto lg:border-b-0 lg:border-r",
+                  featuredCoverIsSvg ? "cover-frame--poster" : "cover-frame--screen"
+                ]}
+              >
                 <img
                   src={featuredCover!}
                   alt={featuredPost.data.title}
                   class:list={[
-                    "h-full w-full",
-                    featuredCoverIsSvg ? "bg-slate-950/80 object-contain p-5" : "object-cover"
+                    "cover-media",
+                    featuredCoverIsSvg ? "cover-media--poster" : "cover-media--screen"
                   ]}
                 />
               </div>

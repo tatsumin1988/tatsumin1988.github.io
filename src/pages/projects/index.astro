@@ -86,13 +86,18 @@ const leadCoverIsSvg = leadCover?.endsWith(".svg");
           </p>
         </div>
         <a href={withBase(`/projects/${leadProject.id}/`)} class="surface-feature grid overflow-hidden lg:grid-cols-[0.5fr_0.5fr]">
-          <div class="relative aspect-[4/3] overflow-hidden border-b border-white/8 lg:aspect-auto lg:border-b-0 lg:border-r">
+          <div
+            class:list={[
+              "cover-frame border-b border-white/8 lg:aspect-auto lg:border-b-0 lg:border-r",
+              leadCoverIsSvg ? "cover-frame--poster" : "cover-frame--screen"
+            ]}
+          >
             <img
               src={leadCover!}
               alt={leadProject.data.title}
               class:list={[
-                "h-full w-full",
-                leadCoverIsSvg ? "bg-slate-950/80 object-contain p-5" : "object-cover"
+                "cover-media",
+                leadCoverIsSvg ? "cover-media--poster" : "cover-media--screen"
               ]}
             />
           </div>

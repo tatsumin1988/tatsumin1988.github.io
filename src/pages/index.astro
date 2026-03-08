@@ -76,6 +76,10 @@ const leadProject = selectedProjects[0] ?? projects[0];
 const supportingProjects = selectedProjects.filter((project) => project.id !== leadProject?.id).slice(0, 2);
 const featuredPost = latestPosts[0] ?? posts[0];
 const secondaryPosts = latestPosts.filter((post) => post.id !== featuredPost?.id).slice(0, 2);
+const leadProjectCover = leadProject ? withBase(leadProject.data.cover_image ?? "/og/default.svg") : null;
+const leadProjectCoverIsSvg = leadProjectCover?.endsWith(".svg");
+const featuredPostCover = featuredPost ? withBase(featuredPost.data.cover_image ?? "/og/default.svg") : null;
+const featuredPostCoverIsSvg = featuredPostCover?.endsWith(".svg");
 ---
 
 <BaseLayout>
@@ -211,11 +215,19 @@ const secondaryPosts = latestPosts.filter((post) => post.id !== featuredPost?.id
       {leadProject && (
         <div class="grid gap-6 xl:grid-cols-[1.18fr_0.82fr]">
           <a href={withBase(`/projects/${leadProject.id}/`)} class="surface-feature grid overflow-hidden lg:grid-cols-[0.52fr_0.48fr]">
-            <div class="relative min-h-[18rem] border-b border-white/8 lg:min-h-full lg:border-b-0 lg:border-r">
+            <div
+              class:list={[
+                "cover-frame min-h-[18rem] border-b border-white/8 lg:min-h-full lg:border-b-0 lg:border-r",
+                leadProjectCoverIsSvg ? "cover-frame--poster lg:aspect-auto" : "cover-frame--screen lg:aspect-auto"
+              ]}
+            >
               <img
-                src={withBase(leadProject.data.cover_image ?? "/og/default.svg")}
+                src={leadProjectCover!}
                 alt={leadProject.data.title}
-                class="h-full w-full object-cover"
+                class:list={[
+                  "cover-media",
+                  leadProjectCoverIsSvg ? "cover-media--poster" : "cover-media--screen"
+                ]}
               />
             </div>
             <div class="relative z-10 flex flex-col gap-5 p-6 md:p-8">
@@ -265,11 +277,19 @@ const secondaryPosts = latestPosts.filter((post) => post.id !== featuredPost?.id
       <div class="grid gap-6 xl:grid-cols-[1.06fr_0.94fr]">
         {featuredPost && (
           <a href={withBase(`/blog/${featuredPost.id}/`)} class="surface-feature grid overflow-hidden lg:grid-cols-[0.52fr_0.48fr]">
-            <div class="relative min-h-[18rem] border-b border-white/8 lg:min-h-full lg:border-b-0 lg:border-r">
+            <div
+              class:list={[
+                "cover-frame min-h-[18rem] border-b border-white/8 lg:min-h-full lg:border-b-0 lg:border-r",
+                featuredPostCoverIsSvg ? "cover-frame--poster lg:aspect-auto" : "cover-frame--screen lg:aspect-auto"
+              ]}
+            >
               <img
-                src={withBase(featuredPost.data.cover_image ?? "/og/default.svg")}
+                src={featuredPostCover!}
                 alt={featuredPost.data.title}
-                class="h-full w-full object-cover"
+                class:list={[
+                  "cover-media",
+                  featuredPostCoverIsSvg ? "cover-media--poster" : "cover-media--screen"
+                ]}
               />
             </div>
             <div class="relative z-10 flex flex-col gap-5 p-6 md:p-8">

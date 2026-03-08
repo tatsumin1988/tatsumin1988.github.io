@@ -196,9 +196,9 @@ select {
   margin: 0;
   color: var(--color-heading);
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 7vw, 5.8rem);
+  font-size: clamp(2.6rem, 5.8vw, 5rem);
   font-weight: 700;
-  line-height: 0.98;
+  line-height: 1.01;
   letter-spacing: -0.04em;
 }
 
@@ -375,6 +375,80 @@ select {
   background-size: 24px 24px;
 }
 
+body[data-mobile-nav-open="true"] {
+  overflow: hidden;
+}
+
+.mobile-sheet-root {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.mobile-sheet-root[data-open="true"] {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.mobile-sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(2, 6, 23, 0.72);
+  backdrop-filter: blur(12px);
+}
+
+.mobile-sheet-panel {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: min(24rem, calc(100vw - 1rem));
+  transform: translateX(100%);
+  border-left: 1px solid rgba(148, 163, 184, 0.14);
+  background:
+    radial-gradient(circle at top right, rgba(125, 211, 252, 0.14), transparent 34%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(8, 12, 19, 0.98) 100%);
+  box-shadow: -24px 0 80px rgba(2, 6, 23, 0.45);
+  transition: transform 240ms ease;
+}
+
+.mobile-sheet-root[data-open="true"] .mobile-sheet-panel {
+  transform: translateX(0);
+}
+
+.cover-frame {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(125, 211, 252, 0.1), transparent 38%),
+    rgba(2, 6, 23, 0.8);
+}
+
+.cover-frame--poster {
+  aspect-ratio: 4 / 3;
+}
+
+.cover-frame--screen {
+  aspect-ratio: 16 / 10;
+}
+
+.cover-media {
+  width: 100%;
+  height: 100%;
+}
+
+.cover-media--poster {
+  object-fit: contain;
+  background: rgba(2, 6, 23, 0.72);
+  padding: 1rem;
+}
+
+.cover-media--screen {
+  object-fit: cover;
+}
+
 .prose {
   --tw-prose-body: var(--color-text-soft);
   --tw-prose-headings: var(--color-heading);
@@ -498,6 +572,10 @@ select {
 
   .timeline-step {
     padding-left: 3.75rem;
+  }
+
+  .mobile-sheet-panel {
+    width: min(100vw - 0.5rem, 22rem);
   }
 }
 

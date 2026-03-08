@@ -8,6 +8,7 @@ import TagList from "../../components/ui/TagList.astro";
 import { formatDate } from "../../utils/dates";
 import { getPublishedBlogPosts, getRelatedBlogPosts } from "../../utils/content";
 import { withBase } from "../../utils/links";
+import { slugifyTaxonomyTerm } from "../../utils/taxonomy";
 
 export async function getStaticPaths() {
   const posts = await getPublishedBlogPosts();
@@ -29,6 +30,7 @@ const relatedPosts = getRelatedBlogPosts(posts, post, 3);
 const { Content, headings } = await render(post);
 const coverImage = post.data.cover_image ? withBase(post.data.cover_image) : null;
 const coverIsSvg = coverImage?.endsWith(".svg");
+const leadTag = post.data.tags[0];
 ---
 
 <BaseLayout
@@ -80,8 +82,8 @@ const coverIsSvg = coverImage?.endsWith(".svg");
             src={coverImage}
             alt={post.data.title}
             class:list={[
-              "h-full max-h-[34rem] w-full",
-              coverIsSvg ? "bg-slate-950/80 object-contain p-6" : "object-cover"
+              "cover-media max-h-[34rem]",
+              coverIsSvg ? "cover-media--poster" : "cover-media--screen"
             ]}
           />
         </div>
@@ -123,32 +125,60 @@ const coverIsSvg = coverImage?.endsWith(".svg");
   </section>
 
   <section class="section-divider section-space pt-10">
-    <Container class="grid gap-5 md:grid-cols-2">
-      {newerPost ? (
-        <a href={withBase(`/blog/${newerPost.id}/`)} class="surface-card p-6 md:p-7">
-          <p class="info-label">新しい記事</p>
-          <h2 class="mt-3 text-xl font-semibold tracking-tight text-white">{newerPost.data.title}</h2>
-          <p class="mt-3 text-sm text-slate-400">{newerPost.data.description}</p>
-        </a>
-      ) : (
-        <div class="surface-card p-6 md:p-7 opacity-70">
-          <p class="info-label">新しい記事</p>
-          <p class="mt-3 text-sm text-slate-400">これが最新の記事です。</p>
+    <Container class="grid gap-6 xl:grid-cols-[0.42fr_0.58fr] xl:items-start">
+      <aside class="surface-feature p-6 md:p-8">
+        <div class="relative z-10 space-y-5">
+          <p class="eyebrow eyebrow-muted">次に読む</p>
+          <h2 class="section-title">近いテーマの記事や前後の流れを、ここから続けて追えます。</h2>
+          <p class="text-sm leading-7 text-slate-300">
+            一覧へ戻るより先に、関連する論点や時系列の前後へ移れるように導線をまとめています。拾い読みしたいときはタグ導線も使えます。
+          </p>
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <a
+              href={withBase("/blog/")}
+              class="inline-flex items-center justify-center rounded-full border border-white/10 px-5 py-3 text-sm font-semibold text-white transition duration-200 hover:border-sky-300/20 hover:bg-white/6"
+            >
+              記事一覧へ
+            </a>
+            {leadTag && (
+              <a
+                href={withBase(`/blog/tags/${slugifyTaxonomyTerm(leadTag)}/`)}
+                class="inline-flex items-center justify-center rounded-full bg-sky-300 px-5 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-200"
+              >
+                {leadTag}の記事を見る
+              </a>
+            )}
+          </div>
         </div>
-      )}
+      </aside>
 
-      {olderPost ? (
-        <a href={withBase(`/blog/${olderPost.id}/`)} class="surface-card p-6 md:p-7">
-          <p class="info-label">前の記事</p>
-          <h2 class="mt-3 text-xl font-semibold tracking-tight text-white">{olderPost.data.title}</h2>
-          <p class="mt-3 text-sm text-slate-400">{olderPost.data.description}</p>
-        </a>
-      ) : (
-        <div class="surface-card p-6 md:p-7 opacity-70">
-          <p class="info-label">前の記事</p>
-          <p class="mt-3 text-sm text-slate-400">まだこれより古い記事はありません。</p>
-        </div>
-      )}
+      <div class="grid gap-5 md:grid-cols-2">
+        {newerPost ? (
+          <a href={withBase(`/blog/${newerPost.id}/`)} class="surface-card p-6 md:p-7">
+            <p class="info-label">新しい記事</p>
+            <h2 class="mt-3 text-xl font-semibold tracking-tight text-white">{newerPost.data.title}</h2>
+            <p class="mt-3 text-sm text-slate-400">{newerPost.data.description}</p>
+          </a>
+        ) : (
+          <div class="surface-card p-6 md:p-7 opacity-70">
+            <p class="info-label">新しい記事</p>
+            <p class="mt-3 text-sm text-slate-400">これが最新の記事です。</p>
+          </div>
+        )}
+
+        {olderPost ? (
+          <a href={withBase(`/blog/${olderPost.id}/`)} class="surface-card p-6 md:p-7">
+            <p class="info-label">前の記事</p>
+            <h2 class="mt-3 text-xl font-semibold tracking-tight text-white">{olderPost.data.title}</h2>
+            <p class="mt-3 text-sm text-slate-400">{olderPost.data.description}</p>
+          </a>
+        ) : (
+          <div class="surface-card p-6 md:p-7 opacity-70">
+            <p class="info-label">前の記事</p>
+            <p class="mt-3 text-sm text-slate-400">まだこれより古い記事はありません。</p>
+          </div>
+        )}
+      </div>
     </Container>
   </section>
 
@@ -158,8 +188,11 @@ const coverIsSvg = coverImage?.endsWith(".svg");
         <div class="space-y-3">
           <p class="eyebrow eyebrow-muted">関連記事</p>
           <h2 class="section-title">近い論点の記事</h2>
+          <p class="lead-copy max-w-3xl">
+            同じタグを共有しているだけでなく、似た課題構造を持つ記事を優先して並べています。
+          </p>
         </div>
-        <div class="space-y-6">
+        <div class="grid gap-6 xl:grid-cols-2">
           {relatedPosts.map((entry) => <BlogCard post={entry} />)}
         </div>
       </Container>

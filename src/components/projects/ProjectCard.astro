@@ -19,14 +19,14 @@ const shortSolution =
 
 <article class="surface-card overflow-hidden">
   <a href={withBase(`/projects/${project.id}/`)} class="flex h-full flex-col">
-    <div class="relative aspect-[4/3] overflow-hidden border-b border-white/8">
+    <div class:list={["cover-frame border-b border-white/8", coverIsSvg ? "cover-frame--poster" : "cover-frame--screen"]}>
       <img
         src={coverImage}
         alt={project.data.title}
         loading="lazy"
         class:list={[
-          "h-full w-full",
-          coverIsSvg ? "bg-slate-950/80 object-contain p-4" : "object-cover"
+          "cover-media",
+          coverIsSvg ? "cover-media--poster" : "cover-media--screen"
         ]}
       />
     </div>
