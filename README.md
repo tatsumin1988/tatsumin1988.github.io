@@ -210,3 +210,12 @@ https://username.github.io/repository-name/
 - Blog 記事は `src/pages/blog/[slug].astro` で詳細表示されます
 - Project 詳細は `src/pages/projects/[slug].astro` で生成されます
 - Blog タグページは `src/pages/blog/tags/[tag].astro` で静的生成されます
+
+## Node.js セキュリティ更新（2026-10-22）
+
+- Node.js 22.23.4 以上の同じメジャー系列を使用してください。基準版は `.nvmrc`、許容範囲は `package.json` に記載しています。
+- [2026年10月21日の公式セキュリティ修正](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases)への対応です。
+- Node.js 本体を更新した後、`node --version` を確認し、`npm ci` で依存関係を復元してください。依存パッケージの版は変更していません。
+- `.npmrc` は古いNode.jsでの依存関係インストールを拒否し、依存パッケージのインストールスクリプトを無効にします。
+- 実行中のサーバーは、Node.js 本体の更新後に再起動し、使用している実行ファイルのパスと版を確認してください。GitHub上の設定変更だけでは稼働中のNode.jsは更新されません。
+- Vercel等ではパッチ版を提供元が管理します。新しいデプロイのビルドログで `node --version` を確認し、修正済みの版であることを確認してください。
